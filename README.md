@@ -2,25 +2,36 @@
 # Neural Network for Classification & Regression
 
 ## Overview
-This project is a simple, educational implementation of a multi-layer neural network (MLP) in Python using only NumPy. It is designed for learning and experimenting with neural networks for both classification and regression tasks.
+This project is a educational implementation of a multi-layer neural network (MLP) in Python. It is designed for learning and experimenting with neural networks.
 
 ---
 
 ## Features
-- Pure Python & NumPy implementation
-- Multi-layer perceptron (MLP) with customizable architecture
-- Supports classification (e.g. XOR) and can be easily extended for regression
-- Modular code: layers, losses, optimizers, utils
-- Simple training loop and prediction interface
-- Example: solving the XOR problem
+
+Sieci rekurencyjne, konwolucyjne, 
 
 ---
 
 ## Getting Started
 
+
 ### Requirements
 - Python 3.8+
 - NumPy
+- Tensorflow
+
+#### Create a Virtual Environment (Recommended)
+
+On Windows:
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+On Linux/Mac:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
 Install dependencies:
 ```bash
@@ -39,24 +50,6 @@ You will see training progress and sample predictions formatted in a readable ta
 
 ## Project Structure
 
-```
-NeuralNetwork/
-├── main.py              # Main script: training & evaluation
-├── requirements.txt     # Dependencies
-├── README.md            # Project info
-├── data/
-│   └── xor.py           # XOR data generator
-├── nn/
-│   ├── __init__.py      # Package init
-│   ├── layers.py        # Layer and activation functions
-│   ├── losses.py        # Loss functions
-│   ├── mlp.py           # MLP class
-│   ├── optim.py         # Optimizers (e.g. Adam)
-│   └── utils.py         # Utility functions
-└── tests/
-	└── test_mlp.py      # Example tests
-```
-
 ---
 
 ## Authors
@@ -67,14 +60,20 @@ NeuralNetwork/
 
 ---
 
-## Planned Features
-- Add support for regression tasks (linear output, MSE loss)
-- More activation functions (tanh, softmax)
-- More loss functions (cross-entropy, MSE)
-- Mini-batch training and data shuffling
-- Model saving/loading
-- More example datasets
-- Unit tests for all modules
+
+## TODO
+
+- [x] Basic MLP implementation
+- [x] XOR example
+- [x] Modular code structure
+- [x] Training and prediction interface
+- [ ] Add support for regression tasks (linear output, MSE loss)
+- [ ] More activation functions (tanh, softmax)
+- [ ] More loss functions (cross-entropy, MSE)
+- [ ] Mini-batch training and data shuffling
+- [ ] Model saving/loading
+- [ ] More example datasets
+- [ ] Unit tests for all modules
 
 ---
 
