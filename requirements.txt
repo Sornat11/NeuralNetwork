@@ -1,2 +1,7 @@
 numpy
+pandas
 tensorflow
+rich
+pytest
+tensorflow
+tensorflow.keras

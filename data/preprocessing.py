@@ -48,5 +48,15 @@ adult_data['income'] = 1 if adult_data['income'] == '>50K' else 0
 adult_data['native.country'] = adult_data['native.country'].apply(lambda x: 1 if x == 'United-States' else 0)
 
 
+# TODO: Improvements and missing features for preprocessing
+# - Refactor code into reusable functions (e.g., load_data, clean_data, encode_features, split_data)
+# - Add preprocessing for regression tasks (regression.csv)
+# - Add normalization/standardization for numerical features
+# - Add option to split data into train/test sets
+# - Add docstrings and English comments
+# - Make the code parameterizable (file paths, columns, etc.)
+# - Add unit tests for preprocessing functions
+
+
 
 
