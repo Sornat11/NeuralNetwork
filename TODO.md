@@ -1,0 +1,34 @@
+# Todo List
+
+- [ ] Analyze project requirements and guidelines
+  - Carefully review the provided project guidelines PDF to extract all functional and non-functional requirements, including support for both recurrent (RNN) and convolutional (CNN) neural networks. Document all requirements for reference.
+- [ ] Design project structure and modules
+  - Plan a clean, modular project structure. Ensure separation of concerns: data handling, model definitions (MLP, RNN, CNN), training, evaluation, and utilities. Prepare for extensibility and maintainability.
+- [ ] Implement data preprocessing module
+  - Develop or refine the data preprocessing pipeline in `data/preprocessing.py`. Ensure support for both classification and regression datasets. Include normalization, encoding, and batching as needed.
+- [ ] Implement utility functions
+  - Add or improve utility functions in `nn/utils.py` for reproducibility (random seeds), logging, and metrics calculation. Ensure code reusability and clarity.
+- [ ] Implement activation functions
+  - Ensure all required activation functions (ReLU, sigmoid, tanh, softmax, etc.) are implemented and tested in `nn/activationFunctions.py`.
+- [ ] Implement loss functions
+  - Implement standard loss functions (MSE, cross-entropy, etc.) in `nn/losses.py`. Ensure compatibility with different network types and tasks.
+- [ ] Implement optimizer algorithms
+  - Implement or refine optimizers (SGD, Adam, etc.) in `nn/optim.py`. Ensure flexibility for different network architectures.
+- [ ] Implement MLP (Multilayer Perceptron)
+  - Ensure a clean, modular implementation of MLP in `nn/mlp.py` and `nn/layers.py`. Support for variable depth, width, and activation functions.
+- [ ] Implement RNN (Recurrent Neural Network)
+  - Design and implement a basic RNN (vanilla, optionally LSTM/GRU) in a new file, e.g., `nn/rnn.py`. Ensure compatibility with the rest of the framework.
+- [ ] Implement CNN (Convolutional Neural Network)
+  - Design and implement a basic CNN in a new file, e.g., `nn/cnn.py`. Include convolutional, pooling, and flatten layers. Ensure modularity and extensibility.
+- [ ] Integrate model selection and training pipeline
+  - Create a unified interface (e.g., in `main.py`) for selecting, configuring, and training different network types (MLP, RNN, CNN). Ensure clean CLI or config-driven workflow.
+- [ ] Implement evaluation and metrics reporting
+  - Develop evaluation routines for classification and regression tasks. Report accuracy, loss, and other relevant metrics. Ensure results are reproducible and well-logged.
+- [ ] Write comprehensive unit tests
+  - Add or expand tests in `tests/` for all modules: layers, activations, losses, optimizers, and models. Ensure high code coverage and test edge cases.
+- [ ] Document code and usage
+  - Write clear docstrings for all functions/classes. Update `README.md` with setup, usage, and example workflows. Optionally, generate API documentation.
+- [ ] Perform code review and refactoring
+  - Review code for best practices: PEP8 compliance, modularity, DRY principle, and performance. Refactor as needed for clarity and maintainability.
+- [ ] Prepare final project deliverables
+  - Ensure all requirements are met, code is clean, tests pass, and documentation is complete. Package the project for submission or deployment.

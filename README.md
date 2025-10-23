@@ -4,11 +4,8 @@
 ## Overview
 This project is a educational implementation of a multi-layer neural network (MLP) in Python. It is designed for learning and experimenting with neural networks.
 
----
 
 ## Features
-
-Sieci rekurencyjne, konwolucyjne, 
 
 ---
 
@@ -57,23 +54,6 @@ You will see training progress and sample predictions formatted in a readable ta
 - **Jakub Sornat**
 - **Maciej Tajs**
 - **Bartłomiej Sadza**
-
----
-
-
-## TODO
-
-- [x] Basic MLP implementation
-- [x] XOR example
-- [x] Modular code structure
-- [x] Training and prediction interface
-- [ ] Add support for regression tasks (linear output, MSE loss)
-- [ ] More activation functions (tanh, softmax)
-- [ ] More loss functions (cross-entropy, MSE)
-- [ ] Mini-batch training and data shuffling
-- [ ] Model saving/loading
-- [ ] More example datasets
-- [ ] Unit tests for all modules
 
 ---
 
