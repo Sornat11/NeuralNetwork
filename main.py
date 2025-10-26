@@ -5,11 +5,11 @@ Uses console_ui for all user interaction and model selection.
 """
 
 from console_ui import show_menu, show_welcome, show_result
-from nn.mlp import MLP
-from nn.keras_rnn import KerasRNN
-from nn.keras_cnn import KerasCNN
+from src.perceptron_manual.mlp import MLP
+from src.keras_rnn import KerasRNN
+from src.keras_cnn import KerasCNN
 from data.xor import generate_xor
-from nn.formatting import format_results
+from src.formatting import format_results
 import numpy as np
 
 def run_mlp():

@@ -9,15 +9,6 @@ This project is a modular, educational framework for experimenting with neural n
 
 ## Features
 
-- **Modular architecture**: Easily extendable for new models and tasks
-- **MLP (NumPy)**: Custom Multilayer Perceptron implementation
-- **RNN (Keras)**: LSTM/GRU/vanilla RNN via TensorFlow Keras
-- **CNN (Keras)**: Convolutional Neural Network via TensorFlow Keras
-- **Data preprocessing**: Utilities for handling missing values, encoding, normalization (see `data/preprocessing.py`)
-- **Rich CLI**: User-friendly console interface using the `rich` library
-- **Comprehensive unit tests**: High coverage for all modules
-- **Reproducibility**: Utilities for random seeds and logging
-- **Example datasets**: XOR, classification, and regression CSVs
 
 ---
 
@@ -32,7 +23,7 @@ This project is a modular, educational framework for experimenting with neural n
 On Windows:
 ```bash
 python -m venv venv
-venv\Scripts\activate
+ .\.venv\Scripts\Activate.ps1
 ```
 On Linux/Mac:
 ```bash
@@ -84,42 +75,6 @@ Test coverage includes all modules: MLP, Keras models, layers, activations, loss
 ---
 
 ## Project Structure
-
-```
-NeuralNetwork/
-│   main.py                # Entry point, CLI, model selection
-│   requirements.txt       # Dependencies
-│   README.md
-│
-├── nn/                    # Neural network modules
-│   ├── mlp.py             # NumPy MLP implementation
-│   ├── keras_cnn.py       # Keras CNN implementation
-│   ├── keras_rnn.py       # Keras RNN implementation
-│   ├── activationFunctions.py
-│   ├── layers.py
-│   ├── losses.py
-│   ├── optim.py
-│   ├── utils.py
-│   └── formatting.py
-│
-├── data/                  # Data and preprocessing
-│   ├── xor.py             # XOR data generator
-│   ├── classification.csv # Example classification data
-│   ├── regression.csv     # Example regression data
-│   └── preprocessing.py   # Data cleaning, encoding, normalization
-│
-├── tests/                 # Unit and integration tests
-│   ├── test_mlp.py
-│   ├── test_keras_keras.py
-│   ├── test_layers.py
-│   ├── test_activationFunctions.py
-│   ├── test_losses.py
-│   ├── test_optim.py
-│   ├── test_utils.py
-│   └── test_mlp_module.py
-│
-└── console_ui.py          # Rich-based CLI interface
-```
 
 ---
 
