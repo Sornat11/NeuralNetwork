@@ -44,36 +44,6 @@ Run the main script and select a model from the menu:
 python main.py
 ```
 
-You will see a menu:
-
-```
-╭────────────────────────────────────────────────────────────╮
-│ Neural Network Model Selection                            │
-├──────────┬───────────────────────────────────────────────┤
-│ 1        │ MLP (Multilayer Perceptron, numpy)            │
-│ 2        │ RNN (Keras LSTM)                              │
-│ 3        │ CNN (Keras Conv2D)                            │
-╰──────────┴───────────────────────────────────────────────╯
-```
-Choose a model to see a demo run with example data. Results are shown in a formatted table or panel.
-
----
-
-
-## Running Tests
-
-To run all unit tests (recommended):
-
-```powershell
-pip install pytest
-$env:PYTHONPATH = (Get-Location)
-pytest
-```
-
-Test coverage includes all modules: MLP, Keras models, layers, activations, losses, optimizers, utils, and data.
-
----
-
 ## Project Structure
 
 ---
@@ -89,3 +59,7 @@ Test coverage includes all modules: MLP, Keras models, layers, activations, loss
 
 ## License
 This project is for educational purposes only.
+
+## Project Report
+
+[Project report (DOCX)](https://aghedupl-my.sharepoint.com/:w:/r/personal/jakubsornat_student_agh_edu_pl/Documents/report.docx?d=w719a3c159b694350a6cdfea27e91fec0&csf=1&web=1&e=UyxR3n)
