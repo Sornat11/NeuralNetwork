@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class ActivationReLU:
     def __init__(self):
         self.output: np.ndarray | None = None
@@ -7,6 +8,12 @@ class ActivationReLU:
     def forward(self, inputs: np.ndarray) -> np.ndarray:
         self.output = np.maximum(0, inputs)
         return self.output
+
+    def backward(self, dvalues: np.ndarray) -> np.ndarray:
+        # Gradient przechodzi tylko tam, gdzie wejście > 0
+        drelu = dvalues.copy()
+        drelu[self.output <= 0] = 0
+        return drelu
 
 
 class ActivationSoftmax:
