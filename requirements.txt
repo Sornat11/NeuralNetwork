@@ -1,6 +1,7 @@
 numpy
 pandas
 openpyxl
+tqdm
 pytest
 tensorflow
 tensorflow.keras

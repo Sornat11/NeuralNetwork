@@ -7,8 +7,16 @@ This project is a modular, educational framework for experimenting with neural n
 
 ---
 
+
 ## Features
 
+- Manual implementation of neural networks (MLP, modular layers, activations)
+- Batch training, L1/L2 regularization, metrics logging
+- Automated hyperparameter experiments (ExperimentRunner)
+- Results export to Excel
+- Ready for plugging in new models (MLP, CNN, RNN, etc.)
+- CLI-ready structure
+- Unit tests for key components
 
 ---
 
@@ -37,16 +45,38 @@ pip install -r requirements.txt
 ```
 
 
+
 ### Usage Example
 
-Run the main script and select a model from the menu:
+Run the main experiment script:
 ```bash
 python main.py
 ```
 
+To add and compare new models, pass their class to ExperimentRunner in `main.py`.
+
+Progress of experiments is shown via tqdm progress bar.
+
+Results are exported to `experiment_results.xlsx`.
+
+See also `ToDo.md` for planned improvements.
+
+
 ## Project Structure
 
----
+```
+main.py                # Main experiment runner
+requirements.txt       # Dependencies
+src/manual_mlp/        # Manual neural network implementation
+src/models/            # Other model types (CNN, RNN, etc.)
+utils/experiment_runner.py  # Experiment automation
+utils/results_exporter.py   # Excel export
+data/                  # Sample data generators and datasets
+tests/                 # Unit tests
+notebooks/             # Jupyter notebooks
+results/               # Output results
+ToDo.md                # Planned tasks
+```
 
 
 ## Authors
