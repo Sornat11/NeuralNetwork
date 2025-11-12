@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
-# 1) Wczytanie danych
 stock = pd.read_csv('data/regression/regression.csv', parse_dates=['datetime'])
 
 print(stock.isna().sum(), "\n")
@@ -18,26 +17,21 @@ if dupes > 0:
 print("Zakres dat:", stock['datetime'].min(), "→", stock['datetime'].max())
 print("Wymiary zbioru:", stock.shape, "\n")
 
-# 3) Chronologiczny podział
 n = len(stock)
 
-# Wariant 1: 80 / 20
 cut80 = int(n * 0.80)
 train80 = stock.iloc[:cut80].copy()
 test20  = stock.iloc[cut80:].copy()
 
-# Wariant 2: 70 / 15 / 15
 cut70 = int(n * 0.70)
 cut85 = int(n * 0.85)
-
 train70      = stock.iloc[:cut70].copy()
 test15       = stock.iloc[cut70:cut85].copy()
 validation15 = stock.iloc[cut85:].copy()
 
-# 4) Standaryzacja tylko kolumn numerycznych
-numeric_cols = stock.select_dtypes(include=np.number).columns.tolist()
+target_col = 'close'
+numeric_cols = [col for col in stock.select_dtypes(include=np.number).columns if col != target_col]
 
-# --- Wariant 1 ---
 scaler_80 = StandardScaler()
 train80_scaled = train80.copy()
 test20_scaled  = test20.copy()
@@ -48,9 +42,6 @@ test20_scaled[numeric_cols]  = scaler_80.transform(test20[numeric_cols])
 train80_scaled.to_csv('data/regression/train80.csv', index=False)
 test20_scaled.to_csv('data/regression/test20.csv', index=False)
 
-print("Zapisano: train80.csv, test20.csv")
-
-# --- Wariant 2 ---
 scaler_70 = StandardScaler()
 train70_scaled      = train70.copy()
 test15_scaled       = test15.copy()
