@@ -21,6 +21,10 @@ class ExperimentRunner:
         description=None,
         regression=False,
         output_file="experiment_results.xlsx",
+        X_val=None,
+        y_val=None,
+        X_test=None,
+        y_test=None,
     ):
         """
         model_class: klasa modelu (np. Model)
@@ -43,6 +47,10 @@ class ExperimentRunner:
         self.description = description
         self.regression = regression
         self.output_file = output_file
+        self.X_val = X_val
+        self.y_val = y_val
+        self.X_test = X_test
+        self.y_test = y_test
 
     def run_all(self):
         param_names = list(self.param_grid.keys())
@@ -61,19 +69,24 @@ class ExperimentRunner:
             X, y = self.X, self.y
 
             # Inicjalizacja modelu (z param_dict z sensownymi domyślnymi wartościami)
+            if self.regression:
+                n_outputs = 1
+            else:
+                n_outputs = param_dict.get("n_outputs", param_dict.get("classes", 3))
             model = self.model_class(
                 param_dict.get("n_inputs", 2),
                 param_dict.get("n_hidden_layers", 2),
                 param_dict.get("n_neurons", 8),
-                param_dict.get("n_outputs", param_dict.get("classes", 3)),
+                n_outputs,
                 param_dict.get("learning_rate", 0.01),
             )
 
-            metrics = ModelMetrics()
-
             if self.regression:
                 # ------- REGRESJA -------
+                metrics = ModelMetrics()
                 losses, maes, r2s = [], [], []
+                val_losses, val_maes, val_r2s = [], [], []
+                test_losses, test_maes, test_r2s = [], [], []
 
                 for epoch in tqdm(
                     range(self.epochs),
@@ -87,20 +100,17 @@ class ExperimentRunner:
                         X_batch = X[start:end]
                         y_batch = y[start:end]
 
-                        # KLUCZOWE: target na kształt (B, 1) żeby uniknąć broadcastingu
                         if y_batch.ndim == 1:
                             y_batch = y_batch.reshape(-1, 1)
 
-                        # Forward
                         out = X_batch
                         for layer, activation in zip(
                             model.hidden_layers, model.activations
                         ):
                             out = layer.forward(out)
                             out = activation.forward(out)
-                        out2 = model.output_layer.forward(out)  # (B, 1)
+                        out2 = model.output_layer.forward(out)
 
-                        # Metryki
                         batch_loss = metrics.mse(out2, y_batch)
                         batch_mae = metrics.mae(out2, y_batch)
                         batch_r2 = metrics.r2_score(out2, y_batch)
@@ -108,9 +118,7 @@ class ExperimentRunner:
                         epoch_maes.append(batch_mae)
                         epoch_r2s.append(batch_r2)
 
-                        # Backward
-                        dvalues = out2 - y_batch  # (B, 1)
-                        # Spójnie przekazujemy wejście do warstwy wyjściowej
+                        dvalues = out2 - y_batch
                         prev_hidden_out = (
                             out if len(model.hidden_layers) > 0 else X_batch
                         )
@@ -128,6 +136,38 @@ class ExperimentRunner:
                     maes.append(float(np.mean(epoch_maes)))
                     r2s.append(float(np.mean(epoch_r2s)))
 
+                    # Walidacja po każdej epoce (jeśli podano dane walidacyjne)
+                    if self.X_val is not None and self.y_val is not None:
+                        val_out = self.X_val
+                        for layer, activation in zip(
+                            model.hidden_layers, model.activations
+                        ):
+                            val_out = layer.forward(val_out)
+                            val_out = activation.forward(val_out)
+                        val_out2 = model.output_layer.forward(val_out)
+                        val_loss = metrics.mse(val_out2, self.y_val)
+                        val_mae = metrics.mae(val_out2, self.y_val)
+                        val_r2 = metrics.r2_score(val_out2, self.y_val)
+                        val_losses.append(val_loss)
+                        val_maes.append(val_mae)
+                        val_r2s.append(val_r2)
+
+                # Test po treningu (jeśli podano dane testowe)
+                if self.X_test is not None and self.y_test is not None:
+                    test_out = self.X_test
+                    for layer, activation in zip(
+                        model.hidden_layers, model.activations
+                    ):
+                        test_out = layer.forward(test_out)
+                        test_out = activation.forward(test_out)
+                    test_out2 = model.output_layer.forward(test_out)
+                    test_loss = metrics.mse(test_out2, self.y_test)
+                    test_mae = metrics.mae(test_out2, self.y_test)
+                    test_r2 = metrics.r2_score(test_out2, self.y_test)
+                    test_losses.append(test_loss)
+                    test_maes.append(test_mae)
+                    test_r2s.append(test_r2)
+
                 # Zapisz wyniki dla tej kombinacji i runa
                 result = {
                     **param_dict,
@@ -136,10 +176,21 @@ class ExperimentRunner:
                     "mae": maes[-1],
                     "r2": r2s[-1],
                 }
+                # Dodaj metryki walidacyjne jeśli są dostępne
+                if self.X_val is not None and self.y_val is not None:
+                    result["val_mse"] = val_losses[-1]
+                    result["val_mae"] = val_maes[-1]
+                    result["val_r2"] = val_r2s[-1]
+                # Dodaj metryki testowe jeśli są dostępne
+                if self.X_test is not None and self.y_test is not None:
+                    result["test_mse"] = test_losses[-1]
+                    result["test_mae"] = test_maes[-1]
+                    result["test_r2"] = test_r2s[-1]
                 all_results.append(result)
 
             else:
                 # ------- KLASYFIKACJA -------
+                metrics = ModelMetrics()
                 losses, accuracies, precisions, recalls, f1_scores = [], [], [], [], []
 
                 for epoch in tqdm(
@@ -207,6 +258,38 @@ class ExperimentRunner:
                     recalls.append(float(np.mean(epoch_recalls)))
                     f1_scores.append(float(np.mean(epoch_f1s)))
 
+                # Metryki walidacyjne (jeśli podano dane walidacyjne)
+                val_loss = val_acc = val_prec = val_rec = val_f1 = None
+                if self.X_val is not None and self.y_val is not None:
+                    val_out = self.X_val
+                    for layer, activation in zip(
+                        model.hidden_layers, model.activations
+                    ):
+                        val_out = layer.forward(val_out)
+                        val_out = activation.forward(val_out)
+                    val_out2 = model.output_layer.forward(val_out)
+                    val_loss = metrics.crossentropy_loss(val_out2, self.y_val)
+                    val_acc = metrics.accuracy(val_out2, self.y_val)
+                    val_prec = metrics.precision(val_out2, self.y_val)
+                    val_rec = metrics.recall(val_out2, self.y_val)
+                    val_f1 = metrics.f1_score(val_out2, self.y_val)
+
+                # Metryki testowe (jeśli podano dane testowe)
+                test_loss = test_acc = test_prec = test_rec = test_f1 = None
+                if self.X_test is not None and self.y_test is not None:
+                    test_out = self.X_test
+                    for layer, activation in zip(
+                        model.hidden_layers, model.activations
+                    ):
+                        test_out = layer.forward(test_out)
+                        test_out = activation.forward(test_out)
+                    test_out2 = model.output_layer.forward(test_out)
+                    test_loss = metrics.crossentropy_loss(test_out2, self.y_test)
+                    test_acc = metrics.accuracy(test_out2, self.y_test)
+                    test_prec = metrics.precision(test_out2, self.y_test)
+                    test_rec = metrics.recall(test_out2, self.y_test)
+                    test_f1 = metrics.f1_score(test_out2, self.y_test)
+
                 # Zapisz wyniki dla tej kombinacji i runa
                 result = {
                     **param_dict,
@@ -217,6 +300,18 @@ class ExperimentRunner:
                     "recall": recalls[-1],
                     "f1_score": f1_scores[-1],
                 }
+                if val_loss is not None:
+                    result["val_loss"] = val_loss
+                    result["val_accuracy"] = val_acc
+                    result["val_precision"] = val_prec
+                    result["val_recall"] = val_rec
+                    result["val_f1_score"] = val_f1
+                if test_loss is not None:
+                    result["test_loss"] = test_loss
+                    result["test_accuracy"] = test_acc
+                    result["test_precision"] = test_prec
+                    result["test_recall"] = test_rec
+                    result["test_f1_score"] = test_f1
                 all_results.append(result)
 
         # Wybierz najlepszy run dla każdej kombinacji hiperparametrów
