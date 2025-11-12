@@ -3,6 +3,9 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 
 stock = pd.read_csv('data/regression/regression.csv', parse_dates=['datetime'])
+cols = [c for c in stock.columns if c != 'close'] + ['close']
+stock = stock[cols]
+
 
 print(stock.isna().sum(), "\n")
 
@@ -13,6 +16,8 @@ dupes = stock.duplicated(subset=['datetime']).sum()
 if dupes > 0:
     print(f"Usunięto {dupes} duplikatów po dacie.")
     stock = stock.drop_duplicates(subset=['datetime']).reset_index(drop=True)
+
+
 
 print("Zakres dat:", stock['datetime'].min(), "→", stock['datetime'].max())
 print("Wymiary zbioru:", stock.shape, "\n")
