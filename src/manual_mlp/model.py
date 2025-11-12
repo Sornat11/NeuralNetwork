@@ -38,8 +38,6 @@ class Model:
         for epoch in range(epochs):
             # Forward pass przez wszystkie warstwy
             out = X
-            # ...existing code...
-            # Calculate loss using metrics
             loss = self.metrics.crossentropy_loss(out, y)
             # ...existing code...
             hidden_outputs = []
@@ -49,9 +47,14 @@ class Model:
                 out = activation.forward(out)
             out2 = self.output_layer.forward(out)
 
-            # Oblicz stratę
-            loss = self.loss.calculate(out2, y)
-            print(f"Epoch {epoch+1}, loss: {loss:.4f}")
+            # Calculate loss using metrics
+            loss = self.metrics.crossentropy_loss(out2, y)
+            acc = self.metrics.accuracy(out2, y)
+            print(f"Epoch {epoch+1}, loss: {loss:.4f}, accuracy: {acc:.4f}")
+            # Print predictions vs true labels (debug)
+            preds = np.argmax(out2, axis=1)
+            print(f"Predictions: {preds[:10]}")
+            print(f"True labels: {y[:10]}")
 
             # Backward pass
             samples = len(out2)
