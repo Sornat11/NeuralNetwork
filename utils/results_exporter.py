@@ -18,29 +18,18 @@ class ResultsExporter:
         - training_time: training duration (seconds)
         """
         with pd.ExcelWriter(self.filename) as writer:
-            # Header: parameters, description, training time in Results sheet
-            header = {}
-            if params_dict:
-                header.update(params_dict)
-            if description:
-                header["description"] = description
-            header["date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            if training_time is not None:
-                header["training_time_sec"] = training_time
-            df_header = pd.DataFrame([header])
+            # Wyniki: tylko hiperparametry, run i metryki
             df_results = pd.DataFrame(results_dict)
-            # Write header in row 1, results from row 2
-            df_header.to_excel(writer, sheet_name="Results", index=False, startrow=0)
-            df_results.to_excel(writer, sheet_name="Results", index=False, startrow=1)
+            df_results.to_excel(writer, sheet_name="Results", index=False)
 
-            # Model parameters and experiment info in separate sheet
-            if params_dict is not None:
-                df_params = pd.DataFrame([params_dict])
-                df_params["date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                if description:
-                    df_params["description"] = description
-                if training_time is not None:
-                    df_params["training_time_sec"] = training_time
-                df_params.to_excel(writer, sheet_name="Params", index=False)
+            # Parametry eksperymentu: tylko description, date, training_time
+            params_info = {}
+            if description:
+                params_info["description"] = description
+            params_info["date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            if training_time is not None:
+                params_info["training_time_sec"] = training_time
+            df_params = pd.DataFrame([params_info])
+            df_params.to_excel(writer, sheet_name="Params", index=False)
 
         print(f"Results and parameters saved to {self.filename}")
