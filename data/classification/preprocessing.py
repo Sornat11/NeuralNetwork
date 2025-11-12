@@ -3,11 +3,14 @@ import numpy as np
 from sklearn.utils import resample
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
 
 from correlation import smart_correlation_matrix
 
 # === 0) Wczytanie i porządek w nazwach kolumn ===
-adult_data = pd.read_csv('data/classification.csv')
+adult_data = pd.read_csv('data/classification/classification.csv')
 
 # mapowanie nazw -> snake_case bez kropek
 rename_map = {
@@ -141,5 +144,57 @@ majority_downsampled = resample(
 adult_balanced = pd.concat([majority_downsampled, minority]).sample(frac=1, random_state=42).reset_index(drop=True)
 print(adult_balanced['income'].value_counts(normalize=True))
 print(adult_balanced.shape)
+print(adult_balanced.columns)
 
-adult_balanced.to_csv('data/adult_preprocessed.csv', index=False)
+to_be_standardized = ['age', 'education_num', 'hours_per_week', 'capital_net_log']
+
+X = adult_balanced.drop(columns=['income'])
+y = adult_balanced['income']
+X_train80, X_test20, y_train80, y_test20 = train_test_split(
+    X, y, test_size=0.20, random_state=42, stratify=y
+)
+
+# --- Standaryzacja tylko wybranych kolumn ---
+scaler_80 = StandardScaler()
+X_train80_scaled = X_train80.copy()
+X_test20_scaled = X_test20.copy()
+
+X_train80_scaled[to_be_standardized] = scaler_80.fit_transform(X_train80[to_be_standardized])
+X_test20_scaled[to_be_standardized]  = scaler_80.transform(X_test20[to_be_standardized])
+
+train80 = pd.concat([X_train80_scaled.reset_index(drop=True),
+                     y_train80.reset_index(drop=True)], axis=1)
+test20  = pd.concat([X_test20_scaled.reset_index(drop=True),
+                     y_test20.reset_index(drop=True)], axis=1)
+
+train80.to_csv('data/classification/train80.csv', index=False)
+test20.to_csv('data/classification/test20.csv', index=False)
+
+
+X_train70, X_temp, y_train70, y_temp = train_test_split(
+    X, y, test_size=0.30, random_state=42, stratify=y
+)
+X_test15, X_val15, y_test15, y_val15 = train_test_split(
+    X_temp, y_temp, test_size=0.50, random_state=42, stratify=y_temp
+)
+
+# --- Standaryzacja tylko wybranych kolumn ---
+scaler_70 = StandardScaler()
+X_train70_scaled = X_train70.copy()
+X_test15_scaled  = X_test15.copy()
+X_val15_scaled   = X_val15.copy()
+
+X_train70_scaled[to_be_standardized] = scaler_70.fit_transform(X_train70[to_be_standardized])
+X_test15_scaled[to_be_standardized]  = scaler_70.transform(X_test15[to_be_standardized])
+X_val15_scaled[to_be_standardized]   = scaler_70.transform(X_val15[to_be_standardized])
+
+train70      = pd.concat([X_train70_scaled.reset_index(drop=True),
+                          y_train70.reset_index(drop=True)], axis=1)
+test15       = pd.concat([X_test15_scaled.reset_index(drop=True),
+                          y_test15.reset_index(drop=True)], axis=1)
+validation15 = pd.concat([X_val15_scaled.reset_index(drop=True),
+                          y_val15.reset_index(drop=True)], axis=1)
+
+train70.to_csv('data/classification/train70.csv', index=False)
+test15.to_csv('data/classification/test15.csv', index=False)
+validation15.to_csv('data/classification/validation15.csv', index=False)
