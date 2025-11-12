@@ -219,11 +219,32 @@ class ExperimentRunner:
                 }
                 all_results.append(result)
 
+        # Wybierz najlepszy run dla każdej kombinacji hiperparametrów
+        best_results = {}
+        # Wybierz odpowiednie pole do selekcji najlepszego runa
+        best_metric = "loss" if not self.regression else "mse"
+        for result in all_results:
+            combo_key = tuple((k, result[k]) for k in self.param_grid.keys())
+            if (
+                combo_key not in best_results
+                or result[best_metric] < best_results[combo_key][best_metric]
+            ):
+                best_results[combo_key] = result
+
+        best_results_list = list(best_results.values())
+
         # Eksport do Excela
         exporter = ResultsExporter(self.output_file)
         exporter.export(
-            {key: [r[key] for r in all_results] for key in all_results[0].keys()},
-            params_dict={"description": self.description},
+            {
+                key: [r[key] for r in best_results_list]
+                for key in best_results_list[0].keys()
+            },
+            params_dict={
+                k: [r[k] for r in best_results_list] for k in self.param_grid.keys()
+            },
             description=self.description,
         )
-        print("Eksperymenty zakończone i wyeksportowane.")
+        print(
+            "Eksperymenty zakończone i wyeksportowane (tylko najlepsze runy dla każdej kombinacji)."
+        )
