@@ -2,7 +2,7 @@ import numpy as np
 
 from .activations import ActivationReLU
 from .layers import LayerDense
-from .losses import LossCategoricalCrossentropy
+from .metrics import ModelMetrics
 
 
 class Model:
@@ -23,7 +23,7 @@ class Model:
         self.output_layer = LayerDense(
             input_size, n_outputs, learning_rate=learning_rate
         )
-        self.loss = LossCategoricalCrossentropy()
+        self.metrics = ModelMetrics()
         self.learning_rate = learning_rate
 
     def forward(self, X):
@@ -38,6 +38,10 @@ class Model:
         for epoch in range(epochs):
             # Forward pass przez wszystkie warstwy
             out = X
+            # ...existing code...
+            # Calculate loss using metrics
+            loss = self.metrics.crossentropy_loss(out, y)
+            # ...existing code...
             hidden_outputs = []
             for layer, activation in zip(self.hidden_layers, self.activations):
                 out = layer.forward(out)
