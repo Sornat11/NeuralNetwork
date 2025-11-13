@@ -5,6 +5,11 @@ import pandas as pd
 
 class ResultsExporter:
     def __init__(self, filename="results_manual_mlp.xlsx"):
+        import os
+
+        # Jeśli filename nie zawiera ścieżki, dodaj 'results/' jako prefix
+        if not os.path.dirname(filename):
+            filename = os.path.join("results", filename)
         self.filename = filename
 
     def export(

@@ -2,6 +2,7 @@ numpy
 pandas
 openpyxl
 tqdm
+matplotlib
 pytest
 tensorflow
 tensorflow.keras
