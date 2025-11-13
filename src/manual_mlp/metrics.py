@@ -2,28 +2,25 @@ import numpy as np
 
 
 class ModelMetrics:
-    def mse(self, y_pred: np.ndarray, y_true: np.ndarray) -> float:
-        """
-        Mean Squared Error (MSE)
-        MSE = mean((y_pred - y_true)^2)
-        """
+    def _flatten(self, y_pred, y_true):
+        y_pred = np.asarray(y_pred).reshape(-1)
+        y_true = np.asarray(y_true).reshape(-1)
+        return y_pred, y_true
+
+    def mse(self, y_pred, y_true):
+        y_pred, y_true = self._flatten(y_pred, y_true)
         return float(np.mean((y_pred - y_true) ** 2))
 
-    def mae(self, y_pred: np.ndarray, y_true: np.ndarray) -> float:
-        """
-        Mean Absolute Error (MAE)
-        MAE = mean(|y_pred - y_true|)
-        """
+    def mae(self, y_pred, y_true):
+        y_pred, y_true = self._flatten(y_pred, y_true)
         return float(np.mean(np.abs(y_pred - y_true)))
 
-    def r2_score(self, y_pred: np.ndarray, y_true: np.ndarray) -> float:
-        """
-        R^2 (coefficient of determination)
-        R^2 = 1 - sum((y_true - y_pred)^2) / sum((y_true - mean(y_true))^2)
-        """
+    def r2_score(self, y_pred, y_true):
+        y_pred, y_true = self._flatten(y_pred, y_true)
         ss_res = np.sum((y_true - y_pred) ** 2)
         ss_tot = np.sum((y_true - np.mean(y_true)) ** 2)
         return 1 - ss_res / ss_tot if ss_tot != 0 else 0.0
+
 
     def __init__(self):
         pass
