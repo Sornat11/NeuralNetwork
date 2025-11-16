@@ -1,0 +1,586 @@
+\documentclass[12pt,a4paper]{article}
+
+% Polskie znaki i formatowanie
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+
+% Pakiety graficzne i tabele
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{array}
+
+% Kolory i linki
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    citecolor=green,
+}
+
+% Matematyka i kod
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{courier}
+
+% Ustawienia listingów (kod)
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    tabsize=4,
+    showstringspaces=false
+}
+
+% Marginesy
+\usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+
+% Nagłówki i stopki
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{Projekt: Implementacja i analiza sieci neuronowych MLP}
+
+% Metadane dokumentu
+\title{
+    \Huge{\textbf{Projekt: Implementacja i analiza\\sieci neuronowych MLP}} \\
+    \vspace{0.5cm}
+    \Large{Porównanie implementacji ręcznej i frameworkowej}
+}
+
+\author{
+    Jakub Sornat \\
+    Maciej Tajs \\
+    Bartłomiej Sadza
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================================
+\section{Wstęp}
+% ============================================================================
+
+\subsection{Cel projektu}
+
+Celem projektu jest implementacja wielowarstwowego perceptronu (MLP, Multi-Layer Perceptron)
+w dwóch wariantach:
+\begin{itemize}
+    \item \textbf{Implementacja ręczna} -- napisana od podstaw w NumPy, z pełną kontrolą nad
+          forward propagation, backward propagation i optymalizacją
+    \item \textbf{Implementacja frameworkowa} -- wykorzystująca bibliotekę TensorFlow/Keras
+\end{itemize}
+
+Projekt ma na celu:
+\begin{enumerate}
+    \item Zrozumienie wewnętrznego działania sieci neuronowych poprzez implementację od podstaw
+    \item Porównanie wydajności i dokładności obu podejść
+    \item Praktyczne zastosowanie MLP do problemów klasyfikacji i regresji
+    \item Przeprowadzenie systematycznych eksperymentów z różnymi hiperparametrami
+\end{enumerate}
+
+\subsection{Zakres prac}
+
+W ramach projektu zrealizowano:
+\begin{itemize}
+    \item Implementację ręczną sieci MLP z warstwami Dense, aktywacjami ReLU i Softmax
+    \item Implementację modelu MLP w Keras/TensorFlow
+    \item Preprocessing i przygotowanie 4 zbiorów danych (2 klasyfikacyjne, 2 regresyjne)
+    \item Przeprowadzenie eksperymentów z grid search po hiperparametrach
+    \item Analizę wyników i wizualizację (learning curves, confusion matrices, wykresy porównawcze)
+    \item Dokumentację techniczną projektu
+\end{itemize}
+
+\subsection{Użyte technologie}
+
+\begin{itemize}
+    \item \textbf{Python 3.x} -- główny język programowania
+    \item \textbf{NumPy} -- operacje na macierzach i implementacja ręczna
+    \item \textbf{Pandas} -- przetwarzanie danych
+    \item \textbf{TensorFlow/Keras} -- implementacja frameworkowa
+    \item \textbf{Matplotlib} -- wizualizacja wyników
+    \item \textbf{scikit-learn} -- metryki ewaluacji i preprocessing
+    \item \textbf{OpenPyXL} -- eksport wyników do Excel
+\end{itemize}
+
+% ============================================================================
+\section{Zbiory danych}
+% ============================================================================
+
+W projekcie wykorzystano cztery zbiory danych: dwa do klasyfikacji binarnej
+i dwa do regresji.
+
+\subsection{Classification: Adult Income Dataset}
+
+\textbf{Źródło:} UCI Machine Learning Repository
+
+\textbf{Opis:} Zbiór danych zawierający informacje o dochodach osób dorosłych.
+Celem jest przewidzenie, czy osoba zarabia powyżej 50K\$ rocznie.
+
+\textbf{Charakterystyka:}
+\begin{itemize}
+    \item Liczba rekordów: 32,561
+    \item Liczba cech (po preprocessingu): 21
+    \item Klasy: 2 (>50K, ≤50K)
+    \item Typ problemu: Klasyfikacja binarna
+\end{itemize}
+
+\textbf{Przykładowe cechy:}
+\begin{itemize}
+    \item Wiek (age)
+    \item Wykształcenie (education)
+    \item Stan cywilny (marital\_status)
+    \item Zawód (occupation)
+    \item Godziny pracy tygodniowo (hours\_per\_week)
+\end{itemize}
+
+\subsection{Classification (Our): Loan Approval Dataset}
+
+\textbf{Źródło:} [Podać źródło jeśli znane]
+
+\textbf{Opis:} Zbiór danych dotyczący zatwierdzania kredytów bankowych.
+
+\textbf{Charakterystyka:}
+\begin{itemize}
+    \item Liczba rekordów: 50,000
+    \item Liczba cech (po preprocessingu): 9
+    \item Klasy: 2 (Approved, Rejected)
+    \item Typ problemu: Klasyfikacja binarna
+\end{itemize}
+
+\textbf{Przykładowe cechy:}
+\begin{itemize}
+    \item Dochód roczny (annual\_income)
+    \item Wynik kredytowy (credit\_score)
+    \item Liczba niespłaconych kredytów (defaults\_on\_file)
+\end{itemize}
+
+\subsection{Regression: Stock Market Dataset}
+
+\textbf{Źródło:} [Podać źródło jeśli znane]
+
+\textbf{Opis:} Dane z rynku akcji zawierające szeregi czasowe cen i wskaźników.
+
+\textbf{Charakterystyka:}
+\begin{itemize}
+    \item Liczba rekordów: 29,900
+    \item Liczba cech: [liczba po preprocessingu]
+    \item Zmienna docelowa: Cena zamknięcia (closing price)
+    \item Typ problemu: Regresja
+\end{itemize}
+
+\subsection{Regression (Our): Student Performance Dataset}
+
+\textbf{Źródło:} [Podać źródło jeśli znane]
+
+\textbf{Opis:} Zbiór danych o wynikach egzaminów uczniów.
+
+\textbf{Charakterystyka:}
+\begin{itemize}
+    \item Liczba rekordów: 6,607
+    \item Liczba cech (po preprocessingu): 5
+    \item Zmienna docelowa: Wynik egzaminu (exam score)
+    \item Typ problemu: Regresja
+\end{itemize}
+
+\textbf{Cechy:}
+\begin{itemize}
+    \item Godziny nauki (study\_hours)
+    \item Zaangażowanie rodziców (parental\_involvement)
+    \item Dostęp do zasobów edukacyjnych (access\_to\_resources)
+\end{itemize}
+
+% ============================================================================
+\section{Preprocessing danych}
+% ============================================================================
+
+\subsection{Ogólna procedura}
+
+Dla każdego zbioru danych przeprowadzono następujące kroki preprocessingu:
+
+\begin{enumerate}
+    \item \textbf{Obsługa brakujących wartości} -- usuwanie lub imputacja
+    \item \textbf{Kodowanie zmiennych kategorycznych}
+    \begin{itemize}
+        \item One-hot encoding dla zmiennych nominalnych
+        \item Target encoding dla zmiennych o wysokiej kardynalności
+        \item Binary encoding dla zmiennych binarnych
+        \item Ordinal encoding dla zmiennych porządkowych
+    \end{itemize}
+    \item \textbf{Feature engineering} -- tworzenie nowych cech (np. logarytmy, ilorazy)
+    \item \textbf{Selekcja cech} -- analiza korelacji, usuwanie cech o niskiej korelacji z targetem
+    \item \textbf{Balansowanie klas} (dla klasyfikacji) -- undersampling klasy większościowej
+    \item \textbf{Standaryzacja} -- normalizacja cech numerycznych (mean=0, std=1)
+    \item \textbf{Podział danych} -- train/test (80/20) oraz train/val/test (70/15/15)
+\end{enumerate}
+
+\subsection{Adult Income Dataset}
+
+\textbf{Specyficzne operacje:}
+\begin{itemize}
+    \item Usunięto brakujące wartości w kolumnach: workclass, occupation, native\_country
+    \item Binary encoding: sex, native\_country
+    \item Target encoding: occupation (ze względu na wysoką kardynalność)
+    \item One-hot encoding: marital\_status, relationship, workclass
+    \item Feature engineering: capital\_net\_log = log(capital\_gain - capital\_loss + 1)
+    \item Undersampling: zbalansowano klasy do proporcji 1:1
+\end{itemize}
+
+\subsection{Loan Approval Dataset}
+
+\textbf{Specyficzne operacje:}
+\begin{itemize}
+    \item Selekcja cech: usunięto cechy o korelacji < 0.15 z targetem
+    \item Transformacja logarytmiczna: annual\_income, defaults\_on\_file
+    \item Undersampling: zbalansowano klasy
+    \item Standaryzacja wszystkich cech numerycznych
+\end{itemize}
+
+\subsection{Stock Market Dataset}
+
+\textbf{Specyficzne operacje:}
+\begin{itemize}
+    \item Zachowanie uporządkowania czasowego (time-based split)
+    \item Standaryzacja wszystkich wskaźników
+    \item Podział czasowy: 80/20 i 70/15/15
+\end{itemize}
+
+\subsection{Student Performance Dataset}
+
+\textbf{Specyficzne operacje:}
+\begin{itemize}
+    \item Ordinal encoding: Parental\_Involvement, Access\_to\_Resources
+    \item Binary encoding zmiennych kategorycznych
+    \item Selekcja cech: |r| > 0.15 z targetem
+    \item Standaryzacja tylko cech numerycznych (zachowanie interpretacji cech ordinalnych)
+\end{itemize}
+
+% ============================================================================
+\section{Architektura sieci neuronowych}
+% ============================================================================
+
+\subsection{Architektura ogólna}
+
+Obie implementacje (ręczna i Keras) wykorzystują tę samą architekturę MLP:
+
+\begin{itemize}
+    \item \textbf{Warstwa wejściowa:} liczba neuronów = liczba cech
+    \item \textbf{Warstwy ukryte:} N warstw Dense z aktywacją ReLU
+    \item \textbf{Warstwa wyjściowa:}
+    \begin{itemize}
+        \item Klasyfikacja: Dense(n\_classes) + Softmax
+        \item Regresja: Dense(1) + aktywacja liniowa
+    \end{itemize}
+\end{itemize}
+
+\subsection{Implementacja ręczna}
+
+\subsubsection{Warstwa Dense}
+
+Warstwa Dense implementuje transformację liniową:
+\begin{equation}
+    \mathbf{y} = \mathbf{W}^T \mathbf{x} + \mathbf{b}
+\end{equation}
+
+\textbf{Inicjalizacja wag:} Xavier/Glorot uniform
+\begin{equation}
+    W \sim \mathcal{U}\left(-\sqrt{\frac{6}{n_{in} + n_{out}}}, \sqrt{\frac{6}{n_{in} + n_{out}}}\right)
+\end{equation}
+
+\textbf{Backward propagation:}
+\begin{align}
+    \frac{\partial L}{\partial \mathbf{W}} &= \mathbf{x}^T \frac{\partial L}{\partial \mathbf{y}} \\
+    \frac{\partial L}{\partial \mathbf{b}} &= \sum \frac{\partial L}{\partial \mathbf{y}} \\
+    \frac{\partial L}{\partial \mathbf{x}} &= \frac{\partial L}{\partial \mathbf{y}} \mathbf{W}^T
+\end{align}
+
+\subsubsection{Aktywacja ReLU}
+
+\begin{equation}
+    \text{ReLU}(x) = \max(0, x)
+\end{equation}
+
+Gradient:
+\begin{equation}
+    \frac{\partial \text{ReLU}(x)}{\partial x} = \begin{cases}
+        1 & \text{jeśli } x > 0 \\
+        0 & \text{w przeciwnym razie}
+    \end{cases}
+\end{equation}
+
+\subsubsection{Aktywacja Softmax (klasyfikacja)}
+
+\begin{equation}
+    \text{Softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
+\end{equation}
+
+\subsubsection{Funkcja straty}
+
+\textbf{Klasyfikacja:} Cross-entropy loss
+\begin{equation}
+    L = -\frac{1}{N} \sum_{i=1}^{N} \log(\hat{y}_{i,c_i})
+\end{equation}
+gdzie $c_i$ to prawdziwa klasa dla próbki $i$.
+
+\textbf{Regresja:} Mean Squared Error (MSE)
+\begin{equation}
+    L = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2
+\end{equation}
+
+\subsubsection{Optymalizator}
+
+Stochastic Gradient Descent (SGD):
+\begin{equation}
+    W \leftarrow W - \eta \frac{\partial L}{\partial W}
+\end{equation}
+gdzie $\eta$ to learning rate.
+
+\subsection{Implementacja Keras}
+
+Implementacja Keras wykorzystuje wysokopoziomowe API:
+
+\begin{lstlisting}[language=Python, caption=Przykładowa architektura w Keras]
+model = keras.Sequential()
+model.add(layers.Input(shape=(n_inputs,)))
+
+# Warstwy ukryte
+for i in range(n_hidden_layers):
+    model.add(layers.Dense(
+        n_neurons,
+        activation='relu',
+        kernel_initializer='glorot_uniform'
+    ))
+
+# Warstwa wyjściowa
+if task_type == "classification":
+    model.add(layers.Dense(n_outputs, activation='softmax'))
+    model.compile(
+        optimizer=optimizers.SGD(learning_rate=lr),
+        loss='sparse_categorical_crossentropy',
+        metrics=['accuracy']
+    )
+else:
+    model.add(layers.Dense(1, activation='linear'))
+    model.compile(
+        optimizer=optimizers.SGD(learning_rate=lr),
+        loss='mse',
+        metrics=['mae']
+    )
+\end{lstlisting}
+
+% ============================================================================
+\section{Metodologia eksperymentów}
+% ============================================================================
+
+\subsection{Grid Search}
+
+Przeprowadzono systematyczne przeszukiwanie przestrzeni hiperparametrów (grid search):
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartości} \\
+\midrule
+Liczba warstw ukrytych & \{1, 2, 3, 4\} \\
+Liczba neuronów na warstwę & \{8, 16, 32, 64\} \\
+Learning rate & \{0.001, 0.005, 0.01, 0.02\} \\
+Batch size & 32 (stałe) \\
+Liczba epok & 50 (stałe) \\
+\midrule
+\textbf{Liczba kombinacji} & 64 (4 × 4 × 4) \\
+\bottomrule
+\end{tabular}
+\caption{Przestrzeń hiperparametrów}
+\end{table}
+
+\subsection{Procedura eksperymentu}
+
+Dla każdej kombinacji hiperparametrów:
+\begin{enumerate}
+    \item Przeprowadzono \textbf{3 powtórzenia} (runs) z różną inicjalizacją
+    \item Wybrano \textbf{najlepszy run} na podstawie metryki na zbiorze treningowym
+    \item Zapisano wyniki (metryki train, validation, test)
+\end{enumerate}
+
+Łącznie: $64 \times 3 = 192$ treningi dla każdego zbioru danych i typu podziału.
+
+\subsection{Metryki ewaluacji}
+
+\subsubsection{Klasyfikacja}
+
+\begin{itemize}
+    \item \textbf{Accuracy:} $\text{Acc} = \frac{TP + TN}{TP + TN + FP + FN}$
+    \item \textbf{Precision:} $\text{Prec} = \frac{TP}{TP + FP}$
+    \item \textbf{Recall:} $\text{Rec} = \frac{TP}{TP + FN}$
+    \item \textbf{F1-score:} $F_1 = 2 \cdot \frac{\text{Prec} \cdot \text{Rec}}{\text{Prec} + \text{Rec}}$
+    \item \textbf{Cross-entropy loss}
+\end{itemize}
+
+\subsubsection{Regresja}
+
+\begin{itemize}
+    \item \textbf{MSE:} $\text{MSE} = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2$
+    \item \textbf{MAE:} $\text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |y_i - \hat{y}_i|$
+    \item \textbf{R² score:} $R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}$
+\end{itemize}
+
+\subsection{Podziały danych}
+
+Dla każdego zbioru zastosowano dwa warianty podziału:
+
+\begin{enumerate}
+    \item \textbf{Train/Test (80/20):}
+    \begin{itemize}
+        \item 80\% danych do treningu
+        \item 20\% danych do testowania
+    \end{itemize}
+
+    \item \textbf{Train/Validation/Test (70/15/15):}
+    \begin{itemize}
+        \item 70\% danych do treningu
+        \item 15\% danych do walidacji (wybór najlepszego modelu)
+        \item 15\% danych do testowania końcowego
+    \end{itemize}
+\end{enumerate}
+
+% ============================================================================
+% WYNIKI EKSPERYMENTÓW - AUTOMATYCZNIE WYGENEROWANE
+% ============================================================================
+
+\input{wyniki_generated.tex}
+
+% ============================================================================
+\section{Wnioski}
+% ============================================================================
+
+\subsection{Porównanie implementacji}
+
+Na podstawie przeprowadzonych eksperymentów można wyciągnąć następujące wnioski:
+
+\textbf{Implementacja ręczna (Manual MLP):}
+\begin{itemize}
+    \item Pełna kontrola nad procesem treningu i możliwość debugowania
+    \item Wysoka wartość edukacyjna -- zrozumienie backpropagation od podstaw
+    \item Wolniejsza ze względu na brak optymalizacji niskopoziomowych
+    \item Dobre wyniki dla klasyfikacji tabelarycznej (82.97\% Adult Income, 86.31\% Loan Approval)
+    \item Problemy z konwergencją dla skomplikowanych danych regresyjnych (ujemny R² dla Stock Market)
+\end{itemize}
+
+\textbf{Implementacja Keras:}
+\begin{itemize}
+    \item Znacznie szybsza (5-10x) dzięki zoptymalizowanemu backendowi
+    \item Łatwość implementacji różnych architektur (MLP, CNN, LSTM)
+    \item Porównywalne wyniki dla klasyfikacji (różnica <0.5\%)
+    \item Zdecydowanie lepsze dla regresji (R² = 0.999 vs -1.25 dla Stock Market)
+    \item Możliwość wykorzystania różnych optimizerów (Adam, RMSprop)
+\end{itemize}
+
+\subsection{Wyniki eksperymentów}
+
+\textbf{Klasyfikacja:}
+\begin{itemize}
+    \item Obie implementacje osiągnęły porównywalne wyniki (różnica <0.5\%)
+    \item Adult Income: Manual 82.97\% vs Keras 82.71\%
+    \item Loan Approval: Manual 86.31\% vs Keras 86.30\%
+    \item Wyniki zgodne z literaturą dla tych zbiorów danych
+\end{itemize}
+
+\textbf{Regresja:}
+\begin{itemize}
+    \item Keras znacząco lepszy od Manual MLP
+    \item Stock Market: Keras R²=0.999 vs Manual R²=-1.25
+    \item Student Performance: Keras R²=0.650 vs Manual R²=0.646
+    \item Manual MLP ma problemy z konwergencją dla danych finansowych
+\end{itemize}
+
+\textbf{Fashion MNIST (obrazy):}
+\begin{itemize}
+    \item CNN zdecydowanie przewyższa MLP (+18.85\% accuracy)
+    \item Keras CNN: 92.88\% vs Manual MLP: 74.03\% vs Keras MLP: 73.22\%
+    \item Potwierdza to, że CNN lepiej nadaje się do analizy obrazów
+\end{itemize}
+
+\subsection{Problemy napotkane}
+
+\begin{enumerate}
+    \item \textbf{Konwergencja Manual MLP dla regresji:} Model ręczny miał problemy z optymalizacją dla danych Stock Market. Prawdopodobna przyczyna: zbyt prosty optymalizator (SGD bez momentum).
+
+    \item \textbf{Wymiary warstw w CNN 1D:} Przy małej liczbie cech (5 dla Stock Market) pooling zbyt mocno redukował wymiary. Rozwiązanie: warunkowe stosowanie poolingu.
+
+    \item \textbf{Czas treningu:} Eksperymenty na Fashion MNIST zajmowały kilka godzin. Rozwiązanie: zwiększenie batch size, zmniejszenie liczby epok.
+
+    \item \textbf{Zarządzanie hiperparametrami:} Grid search generował setki kombinacji. Rozwiązanie: systematyczne śledzenie eksperymentów w plikach Excel.
+\end{enumerate}
+
+\subsection{Możliwe usprawnienia}
+
+\begin{itemize}
+    \item \textbf{Zaimplementowane:}
+    \begin{itemize}
+        \item Momentum w Manual MLP (poprawia konwergencję)
+        \item Różne optymalizatory w Keras (Adam, RMSprop, SGD)
+        \item CNN dla obrazów i CNN 1D dla szeregów czasowych
+        \item LSTM dla danych sekwencyjnych
+    \end{itemize}
+
+    \item \textbf{Do zaimplementowania:}
+    \begin{itemize}
+        \item Regularyzacja (L1, L2, Dropout) -- zapobiega overfittingowi
+        \item Early stopping -- automatyczne zatrzymanie treningu
+        \item Learning rate decay -- zmniejszanie LR w trakcie treningu
+        \item Batch normalization -- stabilizuje trening
+        \item Data augmentation (dla obrazów) -- zwiększa ilość danych treningowych
+    \end{itemize}
+\end{itemize}
+
+% ============================================================================
+\section{Bibliografia}
+% ============================================================================
+
+\begin{enumerate}
+    \item Goodfellow, I., Bengio, Y., Courville, A. (2016). \textit{Deep Learning}. MIT Press.
+    \item Nielsen, M. A. (2015). \textit{Neural Networks and Deep Learning}. Determination Press.
+    \item Géron, A. (2019). \textit{Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow}. O'Reilly Media.
+    \item TensorFlow Documentation: \url{https://www.tensorflow.org/}
+    \item Keras Documentation: \url{https://keras.io/}
+    \item UCI Machine Learning Repository: \url{https://archive.ics.uci.edu/ml/}
+\end{enumerate}
+
+% ============================================================================
+\appendix
+\section{Kod źródłowy}
+% ============================================================================
+
+Pełny kod źródłowy projektu dostępny jest w repozytorium GitHub:
+
+\url{https://github.com/Sornat11/NeuralNetwork}
+
+Struktura projektu:
+\begin{itemize}
+    \item \texttt{src/manual\_mlp/} -- Implementacja ręczna
+    \item \texttt{src/models/} -- Implementacja Keras
+    \item \texttt{data/} -- Zbiory danych i preprocessing
+    \item \texttt{utils/} -- Narzędzia pomocnicze (experiment runner, visualization)
+    \item \texttt{results/} -- Wyniki eksperymentów i wizualizacje
+\end{itemize}
+
+\end{document}

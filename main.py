@@ -102,7 +102,7 @@ if __name__ == "__main__":
                     X=X_train,
                     y=y_train,
                     param_grid=param_grid,
-                    n_runs=3,
+                    n_runs=5,  # Min. 5 powtórzeń zgodnie z wymaganiami projektu
                     batch_size=32,
                     epochs=50,
                     description=description,
@@ -125,7 +125,7 @@ if __name__ == "__main__":
                     X=X_train,
                     y=y_train,
                     param_grid=param_grid,
-                    n_runs=3,
+                    n_runs=5,  # Min. 5 powtórzeń zgodnie z wymaganiami projektu
                     batch_size=32,
                     epochs=50,
                     description=description,

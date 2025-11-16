@@ -1,0 +1,433 @@
+% =============================================================================
+% AUTOMATYCZNIE WYGENEROWANE WYNIKI - DANE Z EKSPERYMENTÓW
+% Data generacji: 2024-11-16
+% =============================================================================
+
+\section{Wyniki eksperymentów}
+
+% =============================================================================
+\subsection{Adult Income (Klasyfikacja binarna)}
+% =============================================================================
+
+\subsubsection{Najlepsze konfiguracje}
+
+\paragraph{Manual MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 4 \\
+Liczba neuronów & 16 \\
+Learning rate & 0.0100 \\
+\midrule
+Test Accuracy & 0.829723 \\
+Test Precision & 0.832371 \\
+Test Recall & 0.829723 \\
+Test F1-score & 0.831044 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Manual MLP, Adult Income}
+\end{table}
+
+\paragraph{Keras MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 3 \\
+Liczba neuronów & 16 \\
+Learning rate & 0.0050 \\
+\midrule
+Test Accuracy & 0.827123 \\
+Test Precision & 0.829648 \\
+Test Recall & 0.827123 \\
+Test F1-score & 0.828384 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Keras MLP, Adult Income}
+\end{table}
+
+\subsubsection{Porównanie}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metryka} & \textbf{Manual MLP} & \textbf{Keras MLP} \\
+\midrule
+Test Accuracy & 0.829723 & 0.827123 \\
+Test Precision & 0.832371 & 0.829648 \\
+Test Recall & 0.829723 & 0.827123 \\
+Test F1-score & 0.831044 & 0.828384 \\
+\bottomrule
+\end{tabular}
+\caption{Porównanie Manual vs Keras - Adult Income}
+\end{table}
+
+
+% =============================================================================
+\subsection{Loan Approval (Klasyfikacja binarna)}
+% =============================================================================
+
+\subsubsection{Najlepsze konfiguracje}
+
+\paragraph{Manual MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 3 \\
+Liczba neuronów & 32 \\
+Learning rate & 0.0200 \\
+\midrule
+Test Accuracy & 0.863117 \\
+Test Precision & 0.863121 \\
+Test Recall & 0.863117 \\
+Test F1-score & 0.863119 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Manual MLP, Loan Approval}
+\end{table}
+
+\paragraph{Keras MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 2 \\
+Liczba neuronów & 64 \\
+Learning rate & 0.0200 \\
+\midrule
+Test Accuracy & 0.862969 \\
+Test Precision & 0.863355 \\
+Test Recall & 0.862971 \\
+Test F1-score & 0.863163 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Keras MLP, Loan Approval}
+\end{table}
+
+\subsubsection{Porównanie}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metryka} & \textbf{Manual MLP} & \textbf{Keras MLP} \\
+\midrule
+Test Accuracy & 0.863117 & 0.862969 \\
+Test Precision & 0.863121 & 0.863355 \\
+Test Recall & 0.863117 & 0.862971 \\
+Test F1-score & 0.863119 & 0.863163 \\
+\bottomrule
+\end{tabular}
+\caption{Porównanie Manual vs Keras - Loan Approval}
+\end{table}
+
+
+% =============================================================================
+\subsection{Stock Market (Regresja)}
+% =============================================================================
+
+\subsubsection{Najlepsze konfiguracje}
+
+\paragraph{Manual MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 2 \\
+Liczba neuronów & 8 \\
+Learning rate & 0.0200 \\
+\midrule
+Test MSE & 149.155077 \\
+Test MAE & 9.931640 \\
+Test R² & -1.248412 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Manual MLP, Stock Market}
+\end{table}
+
+\paragraph{Keras MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 1 \\
+Liczba neuronów & 64 \\
+Learning rate & 0.0010 \\
+\midrule
+Test MSE & 0.076797 \\
+Test MAE & 0.204588 \\
+Test R² & 0.998842 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Keras MLP, Stock Market}
+\end{table}
+
+\paragraph{Keras CNN 1D}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw Conv1D & 1 \\
+Liczba filtrów & 64 \\
+Learning rate & 0.0010 \\
+Optimizer & rmsprop \\
+\midrule
+Test MSE & 0.102108 \\
+Test MAE & 0.248630 \\
+Test R² & 0.998461 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - CNN 1D, Stock Market}
+\end{table}
+
+\paragraph{Keras LSTM}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw LSTM & 1 \\
+Liczba jednostek LSTM & 32 \\
+Learning rate & 0.0010 \\
+Optimizer & rmsprop \\
+\midrule
+Test MSE & 0.184879 \\
+Test MAE & 0.291519 \\
+Test R² & 0.997213 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - LSTM, Stock Market}
+\end{table}
+
+\subsubsection{Porównanie}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Metryka} & \textbf{Manual MLP} & \textbf{Keras MLP} & \textbf{CNN 1D} & \textbf{LSTM} \\
+\midrule
+Test MSE & 149.155077 & 0.076797 & 0.102108 & 0.184879 \\
+Test MAE & 9.931640 & 0.204588 & 0.248630 & 0.291519 \\
+Test R² & -1.248412 & 0.998842 & 0.998461 & 0.997213 \\
+\bottomrule
+\end{tabular}
+\caption{Porównanie wszystkich modeli - Stock Market}
+\end{table}
+
+\textbf{Uwaga:} Manual MLP uzyskał bardzo słabe wyniki na tym zbiorze (ujemny R²), co wskazuje na problemy z konwergencją. Keras MLP osiągnął najlepsze wyniki, wyprzedzając nawet zaawansowane architektury CNN 1D i LSTM.
+
+
+% =============================================================================
+\subsection{Student Performance (Regresja)}
+% =============================================================================
+
+\subsubsection{Najlepsze konfiguracje}
+
+\paragraph{Manual MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 1 \\
+Liczba neuronów & 8 \\
+Learning rate & 0.0010 \\
+\midrule
+Test MSE & 5.842659 \\
+Test MAE & 1.169886 \\
+Test R² & 0.646251 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Manual MLP, Student Performance}
+\end{table}
+
+\paragraph{Keras MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 1 \\
+Liczba neuronów & 32 \\
+Learning rate & 0.0200 \\
+\midrule
+Test MSE & 5.788280 \\
+Test MAE & 1.145609 \\
+Test R² & 0.649544 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Keras MLP, Student Performance}
+\end{table}
+
+\subsubsection{Porównanie}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metryka} & \textbf{Manual MLP} & \textbf{Keras MLP} \\
+\midrule
+Test MSE & 5.842659 & 5.788280 \\
+Test MAE & 1.169886 & 1.145609 \\
+Test R² & 0.646251 & 0.649544 \\
+\bottomrule
+\end{tabular}
+\caption{Porównanie Manual vs Keras - Student Performance}
+\end{table}
+
+
+% =============================================================================
+\subsection{Fashion MNIST (Klasyfikacja obrazów)}
+% =============================================================================
+
+\subsubsection{Najlepsze konfiguracje}
+
+\paragraph{Manual MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 2 \\
+Liczba neuronów & 128 \\
+Learning rate & 0.0010 \\
+\midrule
+Test Accuracy & 0.740300 \\
+Test Precision & 0.741498 \\
+Test Recall & 0.740300 \\
+Test F1-score & 0.740899 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Manual MLP, Fashion MNIST}
+\end{table}
+
+\paragraph{Keras MLP}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw ukrytych & 3 \\
+Liczba neuronów & 128 \\
+Learning rate & 0.0010 \\
+Optimizer & sgd \\
+\midrule
+Test Accuracy & 0.732200 \\
+Test Precision & 0.735203 \\
+Test Recall & 0.732200 \\
+Test F1-score & 0.733698 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Keras MLP, Fashion MNIST}
+\end{table}
+
+\paragraph{Keras CNN}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Hiperparametr} & \textbf{Wartość} \\
+\midrule
+Liczba warstw Conv2D & 2 \\
+Filtry & [64, 128] \\
+Learning rate & 0.0010 \\
+Optimizer & adam \\
+\midrule
+Test Accuracy & 0.928800 \\
+Test Precision & 0.928457 \\
+Test Recall & 0.928800 \\
+Test F1-score & 0.928628 \\
+\bottomrule
+\end{tabular}
+\caption{Najlepsza konfiguracja - Keras CNN, Fashion MNIST}
+\end{table}
+
+\subsubsection{Porównanie}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metryka} & \textbf{Manual MLP} & \textbf{Keras MLP} & \textbf{Keras CNN} \\
+\midrule
+Test Accuracy & 0.740300 & 0.732200 & \textbf{0.928800} \\
+Test Precision & 0.741498 & 0.735203 & \textbf{0.928457} \\
+Test Recall & 0.740300 & 0.732200 & \textbf{0.928800} \\
+Test F1-score & 0.740899 & 0.733698 & \textbf{0.928628} \\
+\bottomrule
+\end{tabular}
+\caption{Porównanie wszystkich modeli - Fashion MNIST}
+\end{table}
+
+\textbf{Wnioski:}
+\begin{itemize}
+    \item CNN osiąga znacząco lepsze wyniki (92.88\% accuracy) niż MLP (74.03\% / 73.22\%)
+    \item Przewaga CNN wynika z wykorzystania lokalnych wzorców przestrzennych w obrazach
+    \item MLP musi traktować obraz jako płaski wektor 784 cech, tracąc informację o strukturze 2D
+\end{itemize}
+
+
+% =============================================================================
+\subsection{Podsumowanie wyników}
+% =============================================================================
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Zbiór danych} & \textbf{Typ} & \textbf{Manual MLP} & \textbf{Keras MLP} & \textbf{Najlepszy model} \\
+\midrule
+Adult Income & Klasyfikacja & 82.97\% & 82.71\% & Manual MLP \\
+Loan Approval & Klasyfikacja & 86.31\% & 86.30\% & Manual MLP \\
+Stock Market & Regresja & $R^2$ = -1.25 & $R^2$ = 0.999 & Keras MLP \\
+Student Perf. & Regresja & $R^2$ = 0.646 & $R^2$ = 0.650 & Keras MLP \\
+Fashion MNIST & Klasyfikacja & 74.03\% & 73.22\% & CNN (92.88\%) \\
+\bottomrule
+\end{tabular}
+\caption{Podsumowanie najlepszych wyników dla wszystkich zbiorów danych}
+\end{table}
+
+\textbf{Główne obserwacje:}
+\begin{enumerate}
+    \item \textbf{Klasyfikacja tabularna:} Manual MLP i Keras MLP osiągają porównywalne wyniki, różnica $<$ 0.5\%
+    \item \textbf{Regresja:} Keras znacząco przewyższa Manual MLP, szczególnie dla Stock Market
+    \item \textbf{Obrazy:} CNN zdecydowanie lepszy od MLP dla Fashion MNIST (+18.85\% accuracy)
+    \item \textbf{Wpływ optymalizatora:} Adam i RMSprop generalnie lepsze od SGD dla skomplikowanych zadań
+\end{enumerate}
+
