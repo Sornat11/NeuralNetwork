@@ -13,6 +13,7 @@ class Model:
         n_neurons: int,
         n_outputs: int,
         learning_rate: float = 0.01,
+        momentum: float = 0.0,  # Momentum coefficient
     ):
         # Warstwy ukryte + ReLU
         self.hidden_layers: list[LayerDense] = []
@@ -21,14 +22,14 @@ class Model:
 
         for _ in range(n_hidden_layers):
             self.hidden_layers.append(
-                LayerDense(input_size, n_neurons, learning_rate=learning_rate)
+                LayerDense(input_size, n_neurons, learning_rate=learning_rate, momentum=momentum)
             )
             self.activations.append(ActivationReLU())
             input_size = n_neurons
 
         # Warstwa wyjściowa (logity)
         self.output_layer = LayerDense(
-            input_size, n_outputs, learning_rate=learning_rate
+            input_size, n_outputs, learning_rate=learning_rate, momentum=momentum
         )
 
         # Softmax na wyjściu – tylko dla klasyfikacji
@@ -36,6 +37,7 @@ class Model:
 
         self.metrics = ModelMetrics()
         self.learning_rate = learning_rate
+        self.momentum = momentum
 
     def forward(self, X: np.ndarray, classification: bool = False) -> np.ndarray:
         """

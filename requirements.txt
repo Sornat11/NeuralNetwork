@@ -5,4 +5,4 @@ tqdm
 matplotlib
 pytest
 tensorflow
-tensorflow.keras
+scikit-learn
