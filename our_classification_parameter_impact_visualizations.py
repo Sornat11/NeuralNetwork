@@ -26,7 +26,7 @@ for param in params:
     x = np.arange(len(grouped[param]))  # pozycje na osi X
     width = 0.2  # szerokość słupka
 
-    plt.figure(figsize=(8,5))
+    plt.figure(figsize=(7,6))
 
     for i, metric in enumerate(metrics):
         plt.bar(
@@ -39,7 +39,7 @@ for param in params:
     plt.xticks(x + width, grouped[param])
     plt.xlabel(param)
     plt.ylabel("value")
-    plt.title(f"Metrics vs {param}")
+    plt.title(f"Metrics vs {param} - classification – our dataset")
     plt.ylim(0.82, 0.88) 
     plt.legend()
     plt.grid(axis='y', linestyle='--', alpha=0.3)
