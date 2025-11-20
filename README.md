@@ -1,179 +1,176 @@
 
-# Neural Network Project – Przewodnik naukowy
 
-**Projekt naukowy realizowany w ramach kursu/pracy dyplomowej.**
+# Neural Networks
 
-Framework do eksperymentów z sieciami neuronowymi (klasyfikacja, regresja, obrazy):
-- własna implementacja MLP (NumPy)
-- modele Keras (MLP, CNN, CNN-1D, LSTM)
-- automatyzacja eksperymentów i wizualizacji
-- eksport wyników do Excela
+**A scientific project developed as part of a course/thesis.**
 
-Projekt spełnia wytyczne akademickie (patrz: `wytyczne_do_projektu.pdf`) i jest gotowy do rozbudowy o nowe architektury, zbiory danych i metody analizy.
+This project is a modular, educational framework for experimenting with neural networks in Python. It supports both classic NumPy-based models and modern Keras models for classification and regression tasks, offering a clear CLI interface and an extensive set of tests.
+
+The project meets academic guidelines (see: `wytyczne_do_projektu.pdf`) and is ready for extension with new architectures, datasets, and analysis methods.
 
 ---
 
-## Spis treści
-1. [Cel projektu](#cel-projektu)
-2. [Funkcjonalności](#funkcjonalności)
-3. [Struktura katalogów](#struktura-katalogów)
-4. [Jak zacząć](#jak-zacząć)
-5. [Uruchamianie eksperymentów](#uruchamianie-eksperymentów)
-6. [Wizualizacje](#wizualizacje)
-7. [Co dopisać w raporcie](#co-dopisać-w-raporcie)
-8. [Szacowany czas pracy](#szacowany-czas-pracy)
+## Table of Contents
+1. [Project Goal](#project-goal)
+2. [Features](#features)
+3. [Directory Structure](#directory-structure)
+4. [Getting Started](#getting-started)
+5. [Running Experiments](#running-experiments)
+6. [Visualizations](#visualizations)
+7. [What to Add in the Report](#what-to-add-in-the-report)
+8. [Estimated Work Time](#estimated-work-time)
 9. [Troubleshooting](#troubleshooting)
-10. [Testy jednostkowe (opcjonalnie)](#testy-jednostkowe)
-11. [Autorzy](#autorzy)
+10. [Unit Tests (Optional)](#unit-tests-optional)
+11. [Authors](#authors)
 
 ---
 
-## Cel projektu
+## Project Goal
 
-Projekt powstał jako praca naukowa mająca na celu:
-- porównanie własnej implementacji sieci neuronowych z rozwiązaniami Keras,
-- analizę wpływu hiperparametrów na wyniki,
-- automatyzację eksperymentów i raportowania,
-- wyciągnięcie wniosków przydatnych w dalszych badaniach nad uczeniem maszynowym.
-
----
-
-## Funkcjonalności
-- Ręczna implementacja MLP (NumPy)
-- Modele Keras: MLP, CNN 2D, CNN 1D, LSTM
-- Automatyczny grid search po hiperparametrach
-- Eksperymenty na 5 zbiorach danych (tabularne i obrazy)
-- Eksport wyników do Excela
-- Generowanie wykresów (learning curves, confusion matrix, scatter)
-- Szczegółowa instrukcja uruchomienia
-- Testy jednostkowe (opcjonalnie)
+This project was created as a scientific work aiming to:
+- compare a custom neural network implementation with Keras solutions,
+- analyze the impact of hyperparameters on results,
+- automate experiments and reporting,
+- draw conclusions useful for further research in machine learning.
 
 ---
 
-## Struktura katalogów
+## Features
+- Manual MLP implementation (NumPy)
+- Keras models: MLP, 2D CNN, 1D CNN, LSTM
+- Automatic grid search over hyperparameters
+- Experiments on 5 datasets (tabular and image)
+- Export results to Excel
+- Generate plots (learning curves, confusion matrix, scatter)
+- Detailed run instructions
+- Unit tests (optional)
+
+---
+
+## Directory Structure
 ```
 NeuralNetwork/
 ├── main.py, main_keras.py, main_fashion_mnist.py, main_regression_advanced.py
 ├── run_all_experiments.py
 ├── requirements.txt
 ├── src/
-│   ├── manual_mlp/         # Ręczna implementacja MLP
-│   └── models/             # Modele Keras: MLP, CNN, LSTM
+│   ├── manual_mlp/         # Manual MLP implementation
+│   └── models/             # Keras models: MLP, CNN, LSTM
 ├── utils/
 │   ├── experiment_runner.py
 │   ├── keras_experiment_runner.py
 │   └── visualization.py
-├── data/                   # Zbiory danych i preprocessing
-├── results/                # Wyniki (Excel, wykresy)
+├── data/                   # Datasets and preprocessing
+├── results/                # Results (Excel, plots)
 │   └── visualizations/
 ├── report/
 │   ├── raport.tex, literatura_template.md
 │   └── Makefile
-├── tests/                  # Testy jednostkowe (opcjonalnie)
+├── tests/                  # Unit tests (optional)
 ├── README.md, JAK_URUCHOMIC.md, PODSUMOWANIE_PRACY.md, INSTRUKCJA_UZUPELNIENIA.md
 ├── wytyczne_do_projektu.pdf
 ```
 
 ---
 
-## Jak zacząć
+## Getting Started
 
-### Środowisko wirtualne (zalecane)
+### Virtual Environment (Recommended)
 
-Środowisko wirtualne pozwala odizolować zależności projektu od reszty systemu i uniknąć konfliktów między różnymi projektami Python. Dzięki temu masz pewność, że wszystkie pakiety są zgodne z wymaganiami projektu.
+A virtual environment allows you to isolate the project's dependencies from the rest of your system and avoid conflicts between different Python projects. This ensures that all packages are compatible with the project's requirements.
 
-**Tworzenie i aktywacja środowiska:**
+**Creating and activating the environment:**
 
-Na Windows:
+On Windows:
 ```bash
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
-Na Linux/Mac:
+On Linux/Mac:
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-**Dezaktywacja środowiska:**
+**Deactivating the environment:**
 ```bash
 deactivate
 ```
 
 ---
 
-1. Utwórz i aktywuj środowisko wirtualne (patrz wyżej).
-2. Zainstaluj zależności:
-	```bash
-	pip install -r requirements.txt
-	```
-3. Uruchom wszystkie eksperymenty (6–10h):
-	```bash
-	python run_all_experiments.py
-	```
+1. Create and activate a virtual environment (see above).
+2. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3. Run all experiments (6–10h):
+    ```bash
+    python run_all_experiments.py
+    ```
 
 ---
 
-## Uruchamianie eksperymentów
+## Running Experiments
 
-1. **Manual MLP (jeśli nie uruchamiałeś wcześniej):**
-	 ```bash
-	 python main.py
-	 ```
+1. **Manual MLP (if not run before):**
+    ```bash
+    python main.py
+    ```
 2. **Keras MLP:**
-	 ```bash
-	 python main_keras.py
-	 ```
+    ```bash
+    python main_keras.py
+    ```
 3. **Fashion MNIST (MLP + CNN):**
-	 ```bash
-	 python main_fashion_mnist.py
-	 ```
-4. **Zaawansowane regresje (CNN-1D + LSTM):**
-	 ```bash
-	 python main_regression_advanced.py
-	 ```
+    ```bash
+    python main_fashion_mnist.py
+    ```
+4. **Advanced regressions (CNN-1D + LSTM):**
+    ```bash
+    python main_regression_advanced.py
+    ```
 
-Wynik: ~21 plików Excel w `results/`.
+Result: ~21 Excel files in `results/`.
 
 ---
 
-## Wizualizacje
+## Visualizations
 
-- **Podstawowe (Manual + Keras MLP):**
-	```bash
-	python generate_visualizations.py
-	```
-- **Rozszerzone (CNN, LSTM, Fashion MNIST):**
-	```bash
-	python generate_visualizations_extended.py
-	```
+- **Basic (Manual + Keras MLP):**
+    ```bash
+    python generate_visualizations.py
+    ```
+- **Extended (CNN, LSTM, Fashion MNIST):**
+    ```bash
+    python generate_visualizations_extended.py
+    ```
 
-Wynik: ~40–46 plików PNG w `results/visualizations/`.
+Result: ~40–46 PNG files in `results/visualizations/`.
 
 ---
 
 ## Troubleshooting
 
-- **Brak pakietów:**
-	```bash
-	pip install -r requirements.txt
-	```
-- **Eksperymenty za wolne:**
-	Zmniejsz gridy:
-	```python
-	HIDDEN_LAYERS_GRID = [2, 3]
-	NEURONS_GRID = [16, 32]
-	```
-- **Brak pamięci RAM:**
-	Zmniejsz batch_size w odpowiednich plikach.
+- **Missing packages:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+- **Experiments too slow:**
+    Reduce grids:
+    ```python
+    HIDDEN_LAYERS_GRID = [2, 3]
+    NEURONS_GRID = [16, 32]
+    ```
+- **Out of RAM:**
+    Reduce batch_size in the relevant files.
 - **TensorFlow warnings:**
-	Można ignorować ostrzeżenia o optymalizacji binariów.
-- **Wizualizacje nie wyświetlają się:**
-	Sprawdź ścieżki do plików PNG.
+    You can ignore binary optimization warnings.
+- **Visualizations not displaying:**
+    Check the paths to PNG files.
 
 ---
 
-## Testy jednostkowe (opcjonalnie)
+## Unit Tests (Optional)
 ```bash
 pip install pytest
 pytest tests/
@@ -181,12 +178,10 @@ pytest tests/
 
 ---
 
-## Autorzy
+## Authors
 
 - Jakub Sornat
 - Maciej Tajs
 - Bartłomiej Sadza
 
 ---
-
-**Projekt spełnia wytyczne naukowe i jest gotowy do dalszych badań! Powodzenia! 🚀**
