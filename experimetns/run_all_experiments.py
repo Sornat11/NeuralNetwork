@@ -26,11 +26,11 @@ def run_script(script_name: str, description: str):
         script_name: Nazwa pliku .py do uruchomienia
         description: Opis co robi ten skrypt
     """
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print(f"🚀 URUCHAMIAM: {description}")
     print(f"📝 Skrypt: {script_name}")
     print(f"🕐 Start: {datetime.now().strftime('%H:%M:%S')}")
-    print("="*80 + "\n")
+    print("=" * 80 + "\n")
 
     start_time = time.time()
 
@@ -40,7 +40,7 @@ def run_script(script_name: str, description: str):
             [sys.executable, script_name],
             check=True,
             capture_output=False,  # Pokaż output w czasie rzeczywistym
-            text=True
+            text=True,
         )
 
         elapsed = time.time() - start_time
@@ -48,34 +48,35 @@ def run_script(script_name: str, description: str):
         minutes = int((elapsed % 3600) // 60)
         seconds = int(elapsed % 60)
 
-        print("\n" + "="*80)
+        print("\n" + "=" * 80)
         print(f"✅ ZAKOŃCZONO: {description}")
         print(f"⏱️  Czas: {hours}h {minutes}m {seconds}s")
         print(f"🕐 Koniec: {datetime.now().strftime('%H:%M:%S')}")
-        print("="*80 + "\n")
+        print("=" * 80 + "\n")
 
         return True, elapsed
 
     except subprocess.CalledProcessError as e:
         elapsed = time.time() - start_time
 
-        print("\n" + "="*80)
+        print("\n" + "=" * 80)
         print(f"❌ BŁĄD: {description}")
         print(f"⏱️  Czas do błędu: {elapsed/60:.1f} minut")
         print(f"🔴 Kod błędu: {e.returncode}")
-        print("="*80 + "\n")
+        print("=" * 80 + "\n")
 
         return False, elapsed
 
     except KeyboardInterrupt:
-        print("\n\n" + "="*80)
+        print("\n\n" + "=" * 80)
         print("⚠️  PRZERWANO przez użytkownika (Ctrl+C)")
-        print("="*80 + "\n")
+        print("=" * 80 + "\n")
         sys.exit(1)
 
 
 def main():
-    print("""
+    print(
+        """
 ╔════════════════════════════════════════════════════════════════════════════╗
 ║                                                                            ║
 ║              NEURAL NETWORKS PROJECT - ALL EXPERIMENTS                     ║
@@ -90,7 +91,8 @@ def main():
 ║    - python main_regression_advanced.py (CNN 1D + LSTM dla regresji)      ║
 ║                                                                            ║
 ╚════════════════════════════════════════════════════════════════════════════╝
-    """)
+    """
+    )
 
     input("\n⏸️  Naciśnij ENTER aby rozpocząć, lub Ctrl+C aby anulować... ")
 
@@ -99,28 +101,25 @@ def main():
         {
             "script": "main.py",
             "description": "Manual MLP - Classification & Regression (4 datasets)",
-            "note": "Jeśli już uruchomiłeś wcześniej, możesz pominąć (zakomentuj poniżej)"
+            "note": "Jeśli już uruchomiłeś wcześniej, możesz pominąć (zakomentuj poniżej)",
         },
-
         # Moduł 2: Keras MLP (classification + regression)
         {
             "script": "main_keras.py",
             "description": "Keras MLP - Classification & Regression (4 datasets)",
-            "note": "Z różnymi optymalizatorami (SGD, Adam, RMSprop)"
+            "note": "Z różnymi optymalizatorami (SGD, Adam, RMSprop)",
         },
-
         # Moduł 3: Fashion MNIST (Manual MLP + Keras MLP + CNN)
         {
             "script": "main_fashion_mnist.py",
             "description": "Fashion MNIST - Manual MLP, Keras MLP, Keras CNN",
-            "note": "Analiza obrazów - 3 różne architektury"
+            "note": "Analiza obrazów - 3 różne architektury",
         },
-
         # Moduł 4: Advanced Regression (CNN 1D + LSTM)
         {
             "script": "main_regression_advanced.py",
             "description": "Advanced Regression - CNN 1D & LSTM (Stock Market)",
-            "note": "Sieci dla szeregów czasowych"
+            "note": "Sieci dla szeregów czasowych",
         },
     ]
 
@@ -133,13 +132,15 @@ def main():
 
         success, elapsed = run_script(exp["script"], exp["description"])
 
-        results.append({
-            "module": i,
-            "script": exp["script"],
-            "description": exp["description"],
-            "success": success,
-            "time": elapsed
-        })
+        results.append(
+            {
+                "module": i,
+                "script": exp["script"],
+                "description": exp["description"],
+                "success": success,
+                "time": elapsed,
+            }
+        )
 
         # Podsumowanie po każdym module
         print("\n📈 Postęp:")
@@ -152,9 +153,9 @@ def main():
     total_hours = int(total_elapsed // 3600)
     total_minutes = int((total_elapsed % 3600) // 60)
 
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("🎉 WSZYSTKIE EKSPERYMENTY ZAKOŃCZONE!")
-    print("="*80)
+    print("=" * 80)
 
     print(f"\n⏱️  Całkowity czas: {total_hours}h {total_minutes}m")
 

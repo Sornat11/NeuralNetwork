@@ -36,7 +36,7 @@ def load_data(path: str):
     return X, y
 
 
-if __name__ == "__main__":
+def run_tabular_keras_experiments():
     # Konfiguracja zbiorów danych
     # (folder, is_regression)
     DATASETS = [
@@ -59,9 +59,9 @@ if __name__ == "__main__":
     NEURONS_GRID = [8, 16, 32, 64]
     LEARNING_RATES_GRID = [0.001, 0.005, 0.01, 0.02]
 
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("EKSPERYMENTY KERAS/TENSORFLOW")
-    print("="*80)
+    print("=" * 80)
 
     for folder, is_regression in DATASETS:
         data_dir = os.path.join("data", folder)
@@ -76,12 +76,12 @@ if __name__ == "__main__":
             if train_file not in files or test_file not in files:
                 continue
 
-            print("\n" + "-"*80)
+            print("\n" + "-" * 80)
             print(
                 f"Dataset: {folder} | "
                 f"Split: train={train_file}, test={test_file}, val={val_file}"
             )
-            print("-"*80)
+            print("-" * 80)
 
             # Wczytaj dane treningowe i testowe
             train_path = os.path.join(data_dir, train_file)
@@ -112,8 +112,7 @@ if __name__ == "__main__":
                     f"({train_file}, {val_file}, {test_file})"
                 )
                 output_file = os.path.join(
-                    "results",
-                    f"keras_wyniki_{folder}_train_val_test.xlsx"
+                    "results", f"keras_wyniki_{folder}_train_val_test.xlsx"
                 )
             else:
                 description = (
@@ -121,8 +120,7 @@ if __name__ == "__main__":
                     f"({train_file}, {test_file})"
                 )
                 output_file = os.path.join(
-                    "results",
-                    f"keras_wyniki_{folder}_train_test.xlsx"
+                    "results", f"keras_wyniki_{folder}_train_test.xlsx"
                 )
 
             # Utwórz runner eksperymentów
@@ -153,8 +151,9 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"\n❌ Błąd podczas eksperymentu: {e}")
                 import traceback
+
                 traceback.print_exc()
 
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("✅ WSZYSTKIE EKSPERYMENTY KERAS ZAKOŃCZONE")
-    print("="*80 + "\n")
+    print("=" * 80 + "\n")

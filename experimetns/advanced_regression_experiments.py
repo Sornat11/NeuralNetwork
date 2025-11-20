@@ -29,7 +29,8 @@ def load_data(path: str):
     return X, y
 
 
-if __name__ == "__main__":
+
+def run_advanced_regression_experiments():
     print("\n" + "="*80)
     print("ADVANCED REGRESSION MODELS (CNN 1D & LSTM)")
     print("Dataset: Stock Market (Time Series)")

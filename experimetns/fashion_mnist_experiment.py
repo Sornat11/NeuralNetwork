@@ -36,7 +36,7 @@ def load_fashion_mnist_data():
     return X_train, y_train, X_val, y_val, X_test, y_test
 
 
-if __name__ == "__main__":
+def run_fashion_mnist_experiments():
     print("\n" + "="*80)
     print("FASHION MNIST EXPERIMENTS")
     print("="*80)

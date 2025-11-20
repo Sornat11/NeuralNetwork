@@ -67,7 +67,7 @@ NeuralNetwork/
 │   ├── raport.tex, literatura_template.md
 │   └── Makefile
 ├── tests/                  # Unit tests (optional)
-├── README.md, JAK_URUCHOMIC.md, PODSUMOWANIE_PRACY.md, INSTRUKCJA_UZUPELNIENIA.md
+├── README.md
 ├── wytyczne_do_projektu.pdf
 ```
 
@@ -115,19 +115,19 @@ deactivate
 
 1. **Manual MLP (if not run before):**
     ```bash
-    python main.py
+    python experimetns/run_tabular_manual_mlp_experiments.py
     ```
 2. **Keras MLP:**
     ```bash
-    python main_keras.py
+    python experimetns/run_tabular_keras_experiments.py
     ```
 3. **Fashion MNIST (MLP + CNN):**
     ```bash
-    python main_fashion_mnist.py
+    python experimetns/run_fashion_mnist_experiment.py
     ```
 4. **Advanced regressions (CNN-1D + LSTM):**
     ```bash
-    python main_regression_advanced.py
+    python experimetns/runn_advanced_regression_experiments.py
     ```
 
 Result: ~21 Excel files in `results/`.
