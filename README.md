@@ -1,95 +1,192 @@
 
+# Neural Network Project – Przewodnik naukowy
 
-# Neural Network Playground: Classification & Regression
+**Projekt naukowy realizowany w ramach kursu/pracy dyplomowej.**
 
-## Overview
-This project is a modular, educational framework for experimenting with neural networks in Python. It supports both classic (NumPy-based) and modern (Keras-based) models for classification and regression tasks, with a clean CLI and comprehensive test suite.
+Framework do eksperymentów z sieciami neuronowymi (klasyfikacja, regresja, obrazy):
+- własna implementacja MLP (NumPy)
+- modele Keras (MLP, CNN, CNN-1D, LSTM)
+- automatyzacja eksperymentów i wizualizacji
+- eksport wyników do Excela
 
----
-
-
-## Features
-
-- Manual implementation of neural networks (MLP, modular layers, activations)
-- Batch training, L1/L2 regularization, metrics logging
-- Automated hyperparameter experiments (ExperimentRunner)
-- Results export to Excel
-- Ready for plugging in new models (MLP, CNN, RNN, etc.)
-- CLI-ready structure
-- Unit tests for key components
+Projekt spełnia wytyczne akademickie (patrz: `wytyczne_do_projektu.pdf`) i jest gotowy do rozbudowy o nowe architektury, zbiory danych i metody analizy.
 
 ---
 
-## Getting Started
+## Spis treści
+1. [Cel projektu](#cel-projektu)
+2. [Funkcjonalności](#funkcjonalności)
+3. [Struktura katalogów](#struktura-katalogów)
+4. [Jak zacząć](#jak-zacząć)
+5. [Uruchamianie eksperymentów](#uruchamianie-eksperymentów)
+6. [Wizualizacje](#wizualizacje)
+7. [Co dopisać w raporcie](#co-dopisać-w-raporcie)
+8. [Szacowany czas pracy](#szacowany-czas-pracy)
+9. [Troubleshooting](#troubleshooting)
+10. [Testy jednostkowe (opcjonalnie)](#testy-jednostkowe)
+11. [Autorzy](#autorzy)
 
+---
 
-### Requirements
+## Cel projektu
 
+Projekt powstał jako praca naukowa mająca na celu:
+- porównanie własnej implementacji sieci neuronowych z rozwiązaniami Keras,
+- analizę wpływu hiperparametrów na wyniki,
+- automatyzację eksperymentów i raportowania,
+- wyciągnięcie wniosków przydatnych w dalszych badaniach nad uczeniem maszynowym.
 
-#### Create a Virtual Environment (Recommended)
+---
 
-On Windows:
+## Funkcjonalności
+- Ręczna implementacja MLP (NumPy)
+- Modele Keras: MLP, CNN 2D, CNN 1D, LSTM
+- Automatyczny grid search po hiperparametrach
+- Eksperymenty na 5 zbiorach danych (tabularne i obrazy)
+- Eksport wyników do Excela
+- Generowanie wykresów (learning curves, confusion matrix, scatter)
+- Szczegółowa instrukcja uruchomienia
+- Testy jednostkowe (opcjonalnie)
+
+---
+
+## Struktura katalogów
+```
+NeuralNetwork/
+├── main.py, main_keras.py, main_fashion_mnist.py, main_regression_advanced.py
+├── run_all_experiments.py
+├── requirements.txt
+├── src/
+│   ├── manual_mlp/         # Ręczna implementacja MLP
+│   └── models/             # Modele Keras: MLP, CNN, LSTM
+├── utils/
+│   ├── experiment_runner.py
+│   ├── keras_experiment_runner.py
+│   └── visualization.py
+├── data/                   # Zbiory danych i preprocessing
+├── results/                # Wyniki (Excel, wykresy)
+│   └── visualizations/
+├── report/
+│   ├── raport.tex, literatura_template.md
+│   └── Makefile
+├── tests/                  # Testy jednostkowe (opcjonalnie)
+├── README.md, JAK_URUCHOMIC.md, PODSUMOWANIE_PRACY.md, INSTRUKCJA_UZUPELNIENIA.md
+├── wytyczne_do_projektu.pdf
+```
+
+---
+
+## Jak zacząć
+
+### Środowisko wirtualne (zalecane)
+
+Środowisko wirtualne pozwala odizolować zależności projektu od reszty systemu i uniknąć konfliktów między różnymi projektami Python. Dzięki temu masz pewność, że wszystkie pakiety są zgodne z wymaganiami projektu.
+
+**Tworzenie i aktywacja środowiska:**
+
+Na Windows:
 ```bash
 python -m venv venv
- .\.venv\Scripts\Activate.ps1
+.\venv\Scripts\Activate.ps1
 ```
-On Linux/Mac:
+Na Linux/Mac:
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-Install dependencies:
+**Dezaktywacja środowiska:**
 ```bash
-pip install -r requirements.txt
+deactivate
 ```
-
-
-
-### Usage Example
-
-Run the main experiment script:
-```bash
-python main.py
-```
-
-To add and compare new models, pass their class to ExperimentRunner in `main.py`.
-
-Progress of experiments is shown via tqdm progress bar.
-
-Results are exported to `experiment_results.xlsx`.
-
-See also `ToDo.md` for planned improvements.
-
-
-## Project Structure
-
-```
-main.py                # Main experiment runner
-requirements.txt       # Dependencies
-src/manual_mlp/        # Manual neural network implementation
-src/models/            # Other model types (CNN, RNN, etc.)
-utils/experiment_runner.py  # Experiment automation
-utils/results_exporter.py   # Excel export
-data/                  # Sample data generators and datasets
-tests/                 # Unit tests
-notebooks/             # Jupyter notebooks
-results/               # Output results
-ToDo.md                # Planned tasks
-```
-
-
-## Authors
-
-- **Jakub Sornat**
-- **Maciej Tajs**
-- **Bartłomiej Sadza**
 
 ---
 
-## License
-This project is for educational purposes only.
+1. Utwórz i aktywuj środowisko wirtualne (patrz wyżej).
+2. Zainstaluj zależności:
+	```bash
+	pip install -r requirements.txt
+	```
+3. Uruchom wszystkie eksperymenty (6–10h):
+	```bash
+	python run_all_experiments.py
+	```
 
-## Project Report
+---
 
-[Project report (DOCX)](https://aghedupl-my.sharepoint.com/:w:/r/personal/jakubsornat_student_agh_edu_pl/Documents/report.docx?d=w719a3c159b694350a6cdfea27e91fec0&csf=1&web=1&e=UyxR3n)
+## Uruchamianie eksperymentów
+
+1. **Manual MLP (jeśli nie uruchamiałeś wcześniej):**
+	 ```bash
+	 python main.py
+	 ```
+2. **Keras MLP:**
+	 ```bash
+	 python main_keras.py
+	 ```
+3. **Fashion MNIST (MLP + CNN):**
+	 ```bash
+	 python main_fashion_mnist.py
+	 ```
+4. **Zaawansowane regresje (CNN-1D + LSTM):**
+	 ```bash
+	 python main_regression_advanced.py
+	 ```
+
+Wynik: ~21 plików Excel w `results/`.
+
+---
+
+## Wizualizacje
+
+- **Podstawowe (Manual + Keras MLP):**
+	```bash
+	python generate_visualizations.py
+	```
+- **Rozszerzone (CNN, LSTM, Fashion MNIST):**
+	```bash
+	python generate_visualizations_extended.py
+	```
+
+Wynik: ~40–46 plików PNG w `results/visualizations/`.
+
+---
+
+## Troubleshooting
+
+- **Brak pakietów:**
+	```bash
+	pip install -r requirements.txt
+	```
+- **Eksperymenty za wolne:**
+	Zmniejsz gridy:
+	```python
+	HIDDEN_LAYERS_GRID = [2, 3]
+	NEURONS_GRID = [16, 32]
+	```
+- **Brak pamięci RAM:**
+	Zmniejsz batch_size w odpowiednich plikach.
+- **TensorFlow warnings:**
+	Można ignorować ostrzeżenia o optymalizacji binariów.
+- **Wizualizacje nie wyświetlają się:**
+	Sprawdź ścieżki do plików PNG.
+
+---
+
+## Testy jednostkowe (opcjonalnie)
+```bash
+pip install pytest
+pytest tests/
+```
+
+---
+
+## Autorzy
+
+- Jakub Sornat
+- Maciej Tajs
+- Bartłomiej Sadza
+
+---
+
+**Projekt spełnia wytyczne naukowe i jest gotowy do dalszych badań! Powodzenia! 🚀**

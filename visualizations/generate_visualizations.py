@@ -12,7 +12,7 @@ import os
 import numpy as np
 import pandas as pd
 
-from utils.visualization import ResultsVisualizer
+from visualizations.visualization import ResultsVisualizer
 from src.manual_mlp.model import Model as ManualModel
 from src.models.keras_mlp import KerasMLPModel
 

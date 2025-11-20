@@ -7,7 +7,7 @@ import os
 import numpy as np
 import pandas as pd
 
-from utils.visualization import ResultsVisualizer
+from visualizations.visualization import ResultsVisualizer
 from src.models.keras_mlp import KerasMLPModel
 from src.models.keras_cnn import KerasCNNModel
 from src.models.keras_cnn_regression import KerasCNN1DRegression
