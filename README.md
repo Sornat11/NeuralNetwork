@@ -50,25 +50,89 @@ This project was created as a scientific work aiming to:
 ## Directory Structure
 ```
 NeuralNetwork/
-├── main.py, main_keras.py, main_fashion_mnist.py, main_regression_advanced.py
-├── run_all_experiments.py
-├── requirements.txt
-├── src/
-│   ├── manual_mlp/         # Manual MLP implementation
-│   └── models/             # Keras models: MLP, CNN, LSTM
-├── utils/
-│   ├── experiment_runner.py
-│   ├── keras_experiment_runner.py
-│   └── visualization.py
-├── data/                   # Datasets and preprocessing
-├── results/                # Results (Excel, plots)
-│   └── visualizations/
-├── report/
-│   ├── raport.tex, literatura_template.md
-│   └── Makefile
-├── tests/                  # Unit tests (optional)
+├── main.py
 ├── README.md
-├── wytyczne_do_projektu.pdf
+├── requirements.txt
+├── data/
+│   ├── sample_data_generator.py
+│   ├── classification/
+│   │   ├── adult_preprocessed.csv
+│   │   ├── classification.csv
+│   │   ├── correlation.py
+│   │   ├── preprocessing.py
+│   │   ├── train70.csv
+│   │   ├── train80.csv
+│   │   ├── test15.csv
+│   │   ├── test20.csv
+│   │   ├── validation15.csv
+│   ├── classification_our/
+│   │   ├── correlation.py
+│   │   ├── loan_approval.csv
+│   │   ├── preprocessing.py
+│   │   ├── train70.csv
+│   │   ├── train80.csv
+│   │   ├── test15.csv
+│   │   ├── test20.csv
+│   │   ├── validation15.csv
+│   ├── fashion_mist/
+│   │   ├── preprocessing.py
+│   │   ├── t10k-images-idx3-ubyte
+│   │   ├── t10k-labels-idx1-ubyte
+│   │   ├── train-images-idx3-ubyte
+│   │   ├── train-labels-idx1-ubyte
+│   ├── image_analysis/
+│   ├── regression/
+│   │   ├── regression_preprocessing.py
+│   │   ├── regression.csv
+│   │   ├── train70.csv
+│   │   ├── train80.csv
+│   │   ├── test15.csv
+│   │   ├── test20.csv
+│   │   ├── validation15.csv
+│   ├── regression_our/
+│   │   ├── correlation.py
+│   │   ├── student_preformance.csv
+│   │   ├── preprocessing.py
+│   │   ├── train70.csv
+│   │   ├── train80.csv
+│   │   ├── test15.csv
+│   │   ├── test20.csv
+│   │   ├── validation15.csv
+├── experimetns/
+│   ├── advanced_regression_experiments.py
+│   ├── fashion_mnist_experiment.py
+│   ├── run_all_experiments.py
+│   ├── run_tabular_keras_experiments.py
+│   ├── tabular_manual_mlp_experiments.py
+├── report/
+├── results/
+├── src/
+│   ├── manual_mlp/
+│   │   ├── activations.py
+│   │   ├── layers.py
+│   │   ├── metrics.py
+│   │   ├── model.py
+│   ├── models/
+│   │   ├── convolutional_nn.py
+│   │   ├── keras_cnn_regression.py
+│   │   ├── keras_cnn.py
+│   │   ├── keras_lstm_regression.py
+│   │   ├── keras_mlp.py
+│   │   ├── multilayer_perceptron.py
+│   │   ├── recurrent_nn.py
+├── tests/
+├── utils/
+    ├── experiment_runner.py
+    ├── keras_experiment_runner.py
+    ├── results_exporter.py
+    ├── seed.py
+    ├── visualizations/
+        ├── classification_parameter_impact_visualization.py
+        ├── generate_visualizations_extended.py
+        ├── generate_visualizations.py
+        ├── our_classification_parameter_impact_visualizations.py
+        ├── our_regression_parameter_impact_visualizations.py
+        ├── visualization.py
 ```
 
 ---
